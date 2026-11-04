@@ -4,7 +4,7 @@ window.PORTAL_DATA = {
   categories: ['校務入口', '學術服務', '財務服務', '資訊服務'],
   defaultFavorites: ['web', 'timetable', 'grades', 'moodle', 'tuition', 'holistic', 'scholarship', 'registration', 'courses', 'library', 'evaluation'],
   tools: [
-    { id: 'web', name: '所有校務 Web 系統入口', category: '校務入口', icon: '所有校務Web系統入口icon.gif', screenshot: '所有校務Web資訊系統截圖.png', tip: '查看完整校務 Web 學生資訊系統，包含學術、財務及資訊服務。' },
+    { id: 'web', name: '校務 Web 系統入口', category: '校務入口', icon: '所有校務系統Web入口icon.png', screenshot: '所有校務Web資訊系統截圖.png', tip: '查看完整校務 Web 學生資訊系統，包含學術、財務及資訊服務。' },
     { id: 'timetable', name: '我的課表', category: '學術服務', icon: '我的課表icon.png', screenshot: '我的課表截圖.png', tip: '查看本學期修課科目、上課時間與教室。' },
     { id: 'evaluation', name: '教學意見調查', category: '學術服務', icon: '教學意見調查icon.png', screenshot: '教學意見調查截圖.png', tip: '填寫本學期課程教學意見調查。' },
     { id: 'grades', name: '成績查詢', category: '學術服務', icon: '成績查詢icon.png', screenshot: '成績查詢系統截圖new.png', tip: '查詢學期成績、歷年修課紀錄與抵免資料。' },
@@ -14,13 +14,13 @@ window.PORTAL_DATA = {
     { id: 'scholarship', name: '個人獎助學金查詢', category: '財務服務', icon: '獎助學金查詢icon.png', screenshot: '個人獎助學金查詢截圖.png', tip: '查詢個人獎助學金與獲獎紀錄。' },
     { id: 'lost', name: '遺失物品查詢', category: '資訊服務', icon: '遺失物品查詢icon.png', url: 'https://m.nccu.edu.tw/claim/', tip: '查看校園拾獲物品與認領資訊。' },
     { id: 'registration', name: '活動報名系統', category: '資訊服務', icon: '活動報名系統icon.png', url: 'https://moltke.nccu.edu.tw/Registration/registration.do?action=conferenceList', tip: '瀏覽校內活動、講座與研討會，前往活動報名。' },
-    { id: 'courses', name: '全校課程查詢系統', category: '學術服務', icon: '全校課程查詢系統icon.gif', url: 'https://qrysub.nccu.edu.tw/', tip: '依學期、系所與關鍵字查詢課程及課程大綱。' },
+    { id: 'courses', name: '全校課程查詢系統', category: '學術服務', icon: '全校課程查詢系統icon.png', url: 'https://qrysub.nccu.edu.tw/', tip: '依學期、系所與關鍵字查詢課程及課程大綱。' },
     { id: 'moodle', name: 'Moodle 45', category: '學術服務', icon: 'moodle45icon.png', url: 'https://moodle45.nccu.edu.tw/', tip: '進入 Moodle 45 數位學習平台，查看教材與作業。' },
-    { id: 'library', name: '政大圖書館', category: '資訊服務', icon: '圖書館icon.gif', url: 'https://www.lib.nccu.edu.tw/', tip: '查詢館藏、電子資源及圖書館服務。' },
+    { id: 'library', name: '政大圖書館', category: '資訊服務', icon: '圖書館icon.png', url: 'https://www.lib.nccu.edu.tw/', tip: '查詢館藏、電子資源及圖書館服務。' },
     { id: 'software', name: '校園授權軟體', category: '資訊服務', icon: '校園授權軟體icon.png', url: 'https://software.nccu.edu.tw/SoftwareM/', tip: '查看與下載校園授權軟體，依身分登入使用。' },
-    { id: 'vpn', name: 'VPN', category: '資訊服務', icon: 'vpnicon.gif', url: 'https://net.nccu.edu.tw/sslvpn/', tip: '查看校園 SSL VPN 遠端連線設定與使用說明。' },
+    { id: 'vpn', name: 'VPN', category: '資訊服務', icon: 'vpnicon.png', url: 'https://net.nccu.edu.tw/sslvpn/', tip: '查看校園 SSL VPN 遠端連線設定與使用說明。' },
     // 尚無專用素材，暫沿用 Web 圖示與完整系統截圖。
-    { id: 'leave', name: '學生請假系統', category: '資訊服務', icon: '所有校務Web系統入口icon.gif', screenshot: '所有校務Web資訊系統截圖.png', tip: '透過校務 Web「資訊服務」進入學生請假系統；目前展示完整 Web 截圖。' }
+    { id: 'leave', name: '學生請假系統', category: '資訊服務', icon: '所有校務系統Web入口icon.png', screenshot: '所有校務Web資訊系統截圖.png', tip: '透過校務 Web「資訊服務」進入學生請假系統；目前展示完整 Web 截圖。' }
   ],
   calendar: {
     year: 2026,
