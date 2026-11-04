@@ -138,17 +138,19 @@ button.day-number[aria-pressed=true] { box-shadow: inset 0 0 0 1.5px currentColo
 .news-link { display: grid; grid-template-columns: 1.04fr 1fr; gap: 20px; align-items: stretch; text-decoration: none; min-width: 0; }
 .news-visual { position: relative; min-height: 180px; border-radius: 5px; background: #e4eff4; overflow: hidden; }
 .news-visual img { width: 100%; height: 100%; object-fit: cover; position: absolute; }
-.news-visual > span { position: absolute; top: 14px; left: 14px; color: var(--blue); font-size: 10px; letter-spacing: .14em; }
+/* 官方新聞可能沒有圖片；保持圖區尺寸，不使用不相關的示意照片。 */
+.news-visual img[hidden] { display: none; }
 .news-copy { display: flex; flex-direction: column; align-items: start; }
-.news-eyebrow { font-size: 9px; letter-spacing: .05em; color: var(--muted); }
 .news-copy h3 { font-size: 19px; font-weight: 600; line-height: 1.7; margin: 10px 0 9px; text-wrap: pretty; }
 .news-copy p { margin: 0 0 16px; color: var(--muted); font-size: 11px; line-height: 1.9; }
 .read-more { margin: auto 0 0 auto; font-size: 11px; color: var(--blue); display: flex; gap: 12px; }
 .news-link:hover .read-more { text-decoration: underline; }
 .carousel-arrow { position: absolute; top: calc(50% - 25px); width: 26px; height: 45px; padding: 0; border: 0; background: transparent; color: var(--blue); font-size: 31px; border-radius: 4px; }
 .carousel-arrow:hover { background: var(--blue-soft); }.previous { left: 2px; }.next { right: 2px; }
+.news-panel .carousel-arrow:disabled { opacity: .3; cursor: default; background: transparent; }
 .news-bottom { display: grid; grid-template-columns: 1.04fr 1fr; gap: 20px; margin-top: 17px; align-items: center; }
-.news-dots { display: flex; justify-content: center; gap: 4px; }
+/* 新聞列表則數較多，頁碼可換行，避免擠出卡片。 */
+.news-dots { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; }
 .news-dots button { width: 25px; height: 22px; padding: 8px 5px; border: 0; background: transparent; }
 .news-dots button::after { content: ''; display: block; height: 5px; width: 5px; margin: auto; background: #c5d5de; border-radius: 3px; transition: width .2s; }
 .news-dots button[aria-current=true]::after { width: 18px; background: var(--blue); }

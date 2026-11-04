@@ -14,7 +14,6 @@
   let editing = false;
   let draggedId = null;
   let activeCalendarMonth = data.calendar.month;
-  let newsIndex = 0;
   let toastTimer;
 
   function element(tag, className, text) {
@@ -495,29 +494,8 @@
     }
   });
 
-  function renderNews() {
-    const news = data.news[newsIndex];
-    document.querySelector('#news-link').href = `news.html?article=${encodeURIComponent(news.id)}`;
-    document.querySelector('#news-image-label').textContent = news.label;
-    document.querySelector('#news-category').textContent = news.category;
-    document.querySelector('#news-heading').textContent = news.title;
-    document.querySelector('#news-summary').textContent = news.summary;
-    document.querySelector('#news-position').textContent = `${String(newsIndex + 1).padStart(2, '0')} / ${String(data.news.length).padStart(2, '0')}`;
-    document.querySelector('#news-image').alt = `${news.label}建置中的校園插畫`;
-    document.querySelectorAll('#news-dots button').forEach((button, index) => button.setAttribute('aria-current', String(index === newsIndex)));
-  }
-  data.news.forEach((news, index) => {
-    const dot = element('button');
-    dot.type = 'button';
-    dot.setAttribute('aria-label', `第 ${index + 1} 則：${news.label}`);
-    dot.addEventListener('click', () => { newsIndex = index; renderNews(); });
-    document.querySelector('#news-dots').append(dot);
-  });
-  document.querySelector('#news-prev').addEventListener('click', () => { newsIndex = (newsIndex - 1 + data.news.length) % data.news.length; renderNews(); });
-  document.querySelector('#news-next').addEventListener('click', () => { newsIndex = (newsIndex + 1) % data.news.length; renderNews(); });
-
   renderTools();
   renderCalendar();
-  renderNews();
+  // 公告輪播移至 announcements.js，資料載入失敗不影響其他區塊。
   new ResizeObserver(updateGridLayout).observe(grid);
 })();

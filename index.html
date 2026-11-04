@@ -13,6 +13,9 @@
   <link rel="stylesheet" href="styles.css">
   <script src="data.js" defer></script>
   <script src="app.js" defer></script>
+  <!-- 政大焦點由排程更新校園新聞資料，獨立於系統入口與行事曆的互動。 -->
+  <script src="announcements-data.js" defer></script>
+  <script src="announcements.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">跳至主要內容</a>
@@ -58,12 +61,16 @@
     </section>
 
     <section class="panel news-panel" aria-labelledby="news-title">
-      <div class="panel-header"><h2 id="news-title">校園資訊</h2><span class="panel-kicker">CAMPUS NEWS</span></div>
-      <div class="news-body" role="region" aria-roledescription="輪播" aria-label="校園新聞與重要資訊">
-        <button id="news-prev" class="carousel-arrow previous" type="button" aria-label="上一則資訊">‹</button>
-        <a id="news-link" class="news-link" href="news.html"><div class="news-visual"><img id="news-image" src="assets/campus-placeholder.svg" alt=""><span id="news-image-label">校園新聞</span></div><div class="news-copy"><span class="news-eyebrow" id="news-category"></span><h3 id="news-heading"></h3><p id="news-summary"></p><span class="read-more">繼續閱讀 <span aria-hidden="true">↗</span></span></div></a>
-        <button id="news-next" class="carousel-arrow next" type="button" aria-label="下一則資訊">›</button>
-        <div class="news-bottom"><div id="news-dots" class="news-dots" aria-label="選擇資訊頁面"></div><span id="news-position" aria-live="polite"></span></div>
+      <div class="panel-header"><h2 id="news-title">政大焦點</h2><!--<span class="panel-kicker">NCCU FOCUS</span>--></div>
+      <div class="news-body" role="region" aria-roledescription="輪播" aria-label="政大焦點">
+        <button id="news-prev" class="carousel-arrow previous" type="button" aria-label="上一則新聞" disabled>‹</button>
+        <!-- 圖片、官方標題及繼續閱讀共用同一連結，不顯示摘要或自訂說明。 -->
+        <a id="news-link" class="news-link" href="https://www.nccu.edu.tw/p/412-1000-87.php?Lang=zh-tw" target="_blank" rel="noopener noreferrer">
+          <div class="news-visual"><img id="news-image" alt="" hidden referrerpolicy="no-referrer"></div>
+          <div class="news-copy"><h3 id="news-heading">前往政大校園新聞</h3><span class="read-more">繼續閱讀 <span aria-hidden="true">↗</span></span></div>
+        </a>
+        <button id="news-next" class="carousel-arrow next" type="button" aria-label="下一則新聞" disabled>›</button>
+        <div class="news-bottom"><div id="news-dots" class="news-dots" aria-label="選擇新聞"></div><span id="news-position" aria-live="polite"></span></div>
       </div>
     </section>
   </main>

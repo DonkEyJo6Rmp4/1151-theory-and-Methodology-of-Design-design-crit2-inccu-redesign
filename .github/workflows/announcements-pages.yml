@@ -1,0 +1,52 @@
+# 啟用方式：將 webpage 作為 repository 根目錄，push 後在
+# Settings → Pages → Source 選 GitHub Actions，再手動執行一次此工作流程。
+# 不需要 token／第三方代理。每小時同步一次，非每次開頁即時抓校方網站。
+# 本排程只部署產物，不 commit／改寫 repository 內的資料快照。
+name: Update NCCU focus news and Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '17 * * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: campus-announcements-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - name: Fetch official campus news
+        # 任一來源讀取失敗即停止；線上網站保持上次成功部署的版本。
+        run: python3 scripts/update_announcements.py
+      - name: Prepare public files
+        # 白名單打包網站，不把 .git、文件、腳本、測試等內容公開。
+        run: |
+          mkdir -p _site
+          cp -- *.html *.css *.js .nojekyll _site/
+          cp -R assets _site/assets
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish updated campus news
+        id: deployment
+        uses: actions/deploy-pages@v4

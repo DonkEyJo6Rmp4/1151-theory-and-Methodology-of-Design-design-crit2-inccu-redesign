@@ -24,9 +24,25 @@ python3 -m http.server 4173 --bind 127.0.0.1
 8. 圖示 hover 或鍵盤聚焦會顯示功能提示；有截圖的服務另開本機截圖，其他服務另開指定網站。宿舍統一入口先開啟直式小視窗；關閉後回到原入口，若從「其他功能」開啟則保留原工具目錄。
 9. 行事曆可在 **2026 年 10–12 月**間切換，左欄顯示該月學期週次；假日日期與假日日程標紅。有日程的日期可點選，右側對應事項會標示。考試週日期使用整格底色，一般日程只以圓點提示；今天以外框標示。右側日程清單固定高度並可垂直捲動，事項多時不會撐高區塊。
 10. 10 月期中考連到成績查詢；11 月停修連到選課系統、繳費及輔系雙主修連到對應入口；12 月校園馬拉松連到活動報名、學雜費減免連到助學金申請、期末考連到成績查詢。Google 按鈕開啟日曆訂閱入口，需使用者在 Google 登入並確認新增；本頁不直接修改 Google 帳號。
-11. 新聞有三則建置中內容、前後箭頭、圓點／短線頁碼、可點擊的整張圖文卡片與詳細展示頁。
+11. 右下區塊「政大焦點」依官方校園新聞列表顯示標題與圖片。左右箭頭及頁碼可切換新聞；點選圖片或文字會前往該則政大新聞，摘要不顯示。
 
-校曆事件依提供資料手動設定，沒有自動同步校方；新聞沒有後端內容管理或即時資料。
+校曆事件依提供資料手動設定，沒有自動同步校方。政大焦點透過 GitHub Actions 定時擷取官方資料；不是訪客每次進入頁面時即時向政大網站請求。
+
+## 政大焦點新聞維護
+
+新聞來源為[政大新聞／校園新聞列表](https://www.nccu.edu.tw/p/412-1000-87.php?Lang=zh-tw)。首頁只顯示來源頁的新聞標題及配圖；沒有配圖時保留圖區，不以示意圖代替。每張新聞卡片的圖片、標題及「繼續閱讀」都連到該篇官方新聞。
+
+`scripts/update_announcements.py` 使用 Python 標準函式庫擷取列表標題、文章網址和圖片，輸出至 `announcements-data.js`。在 `webpage/` 執行：
+
+```sh
+python3 scripts/update_announcements.py
+```
+
+若來源讀取失敗或找不到新聞，程式會停止並保留原快照。若政大改版，檢查程式中的 `NEWS_URL`、`OfficialPageParser` 對 `.d-item`、`.d-img`、`.mtitle` 的擷取規則。
+
+`announcements.js` 讀取 `window.NCCU_ANNOUNCEMENTS.items` 並負責輪播。它以 `textContent` 放入官方標題，並限制文章與圖片網址為 HTTPS 政大網域。公告資料腳本與新聞輪播腳本在 `index.html` 獨立載入，不依賴入口與月曆程式。
+
+`.github/workflows/announcements-pages.yml` 在 push、手動執行及每小時排程時擷取新聞並部署 Pages。首次使用前，需在 GitHub **Settings → Pages → Source** 選 **GitHub Actions**，之後手動執行一次工作流程。更新僅部署生成的網站產物，不會 commit 或覆寫儲存庫中的新聞快照；擷取失敗時會保留線上上一次成功的版本。
 
 ## 行事曆維護
 
@@ -42,12 +58,16 @@ python3 -m http.server 4173 --bind 127.0.0.1
 | --- | --- |
 | `index.html` | 首頁區塊、標題、對話框結構 |
 | `styles.css` | 色彩、尺寸、格線、手機版與編輯動畫 |
-| `data.js` | 工具名稱、分類、提示、圖示、目的地、預設工具、月曆與新聞內容 |
-| `app.js` | 工具編輯、瀏覽器儲存、拖曳、月曆與輪播互動 |
-| `news.html`、`news.js` | 新聞建置中詳細頁 |
+| `data.js` | 工具名稱、分類、提示、圖示、目的地、預設工具與月曆 |
+| `app.js` | 工具編輯、瀏覽器儲存、拖曳及月曆互動 |
+| `announcements.js` | 政大焦點標題、配圖及輪播 |
+| `announcements-data.js` | 擷取後的官方校園新聞快照 |
+| `scripts/update_announcements.py` | 更新官方新聞快照的擷取程式 |
+| `.github/workflows/announcements-pages.yml` | 定時更新新聞並部署 GitHub Pages |
+| `news.html`、`news.js` | 舊版新聞展示頁；首頁政大焦點不再使用 |
 | `assets/icons/` | 使用者提供的原有圖示副本，保留原檔名 |
 | `assets/screenshots/` | 使用者提供的系統截圖副本，保留原檔名 |
-| `assets/campus-placeholder.svg` | 本次以 SVG 繪製的臨時校園插畫 |
+| `assets/campus-placeholder.svg` | 舊版新聞展示頁使用的校園插畫；首頁政大焦點不使用 |
 | `tests/test_portal.py` | Playwright 瀏覽器驗收 |
 | `DEPLOYMENT.md` | GitHub push 與 Pages 部署步驟 |
 
@@ -132,7 +152,7 @@ python3 -m http.server 4173 --bind 127.0.0.1
 ## 給美術的待補項目
 
 - 本次新增入口與學生請假系統已使用提供的 PNG 圖示／截圖，沒有額外製作圖片的需求。
-- **新聞圖片**：目前使用本次繪製的 SVG 臨時插畫；有正式新聞後替換照片即可。不是校方正式建築圖。
+- 政大焦點使用官方校園新聞圖片，不需額外製作新聞示意圖。
 - Web、圖書館、全校課程查詢、VPN 的入口目前已使用提供的 PNG 素材。
 - Noto Sans TC 已套用全站。其他功能加號、Google 的 G、前後箭頭及移除叉叉使用文字／CSS，不需另交圖片。
 
