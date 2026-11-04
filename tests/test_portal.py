@@ -43,6 +43,12 @@ with sync_playwright() as p:
         if 'screenshot' in tool:
             image_url = 'assets/screenshots/' + tool['screenshot']
             assert (ROOT / image_url).is_file()
+        elif 'children' in tool:
+            for child in tool['children']:
+                if 'screenshot' in child:
+                    assert (ROOT / 'assets/screenshots' / child['screenshot']).is_file()
+                else:
+                    assert child['url'].startswith('https://')
         else:
             assert tool['url'].startswith('https://')
     for event in page.evaluate('PORTAL_DATA.calendar.events'):
@@ -50,10 +56,11 @@ with sync_playwright() as p:
             if 'screenshot' in item:
                 assert (ROOT / 'assets/screenshots' / item['screenshot']).is_file()
 
-    # 先往下排列，再往右；灰色新增工具位於最後。
+    # 先往右排列，再往下；灰色其他功能位於最後。
     boxes = page.locator('#tool-grid > li').evaluate_all('(items) => items.map(item => { const r = item.getBoundingClientRect(); return {x:r.x,y:r.y}; })')
-    assert boxes[0]['x'] == boxes[1]['x'] and boxes[0]['y'] < boxes[1]['y']
-    assert boxes[3]['x'] > boxes[0]['x'] and boxes[3]['y'] == boxes[0]['y']
+    columns = int(page.locator('#tool-grid').evaluate('(grid) => getComputedStyle(grid).getPropertyValue("--tool-columns")'))
+    assert boxes[0]['x'] < boxes[1]['x'] and boxes[0]['y'] == boxes[1]['y']
+    assert boxes[columns]['x'] == boxes[0]['x'] and boxes[columns]['y'] > boxes[0]['y']
     expect(page.locator('#tool-grid > li').last).to_have_class('tool-item add-tool')
     page.screenshot(path=str(RESULTS / 'desktop.png'), full_page=True)
 
@@ -64,12 +71,12 @@ with sync_playwright() as p:
         page.locator('[data-id="grades"] .tool-link').click()
     popup = popup_info.value
     popup.wait_for_load_state()
-    assert unquote(popup.url).endswith('成績查詢系統截圖.png')
+    assert unquote(popup.url).endswith(page.evaluate('PORTAL_DATA.tools.find(tool => tool.id === "grades").screenshot'))
     popup.close()
 
     # 新增、搜尋、分類、避免重複新增，以及重新整理後仍保留。
-    page.get_by_role('button', name='新增工具', exact=True).click()
-    expect(page.get_by_role('dialog')).to_be_visible()
+    page.get_by_role('button', name='其他功能', exact=True).click()
+    expect(page.locator('#add-dialog')).to_be_visible()
     expect(page.locator('#tool-catalog h3')).to_have_text(['校務入口', '學術服務', '財務服務', '資訊服務'])
     page.screenshot(path=str(RESULTS / 'add-tools.png'), full_page=True)
     page.get_by_role('searchbox').fill('不利處境')
@@ -81,6 +88,40 @@ with sync_playwright() as p:
     page.reload(wait_until='networkidle')
     assert order(page)[-1] == 'aid'
 
+    # 目錄的圖文可直接開啟，不必先加入快捷；已加入的服務仍能開啟。
+    page.locator('#add-tool').click()
+    page.get_by_role('searchbox').fill('校務建言')
+    launch = page.locator('#tool-catalog .catalog-launch')
+    expect(launch.locator('img')).to_have_count(1)
+    expect(launch.locator('strong')).to_have_text('校務建言')
+    with page.expect_popup() as popup_info:
+        launch.locator('img').click()
+    popup = popup_info.value
+    popup.wait_for_load_state()
+    assert unquote(popup.url).endswith('校務建言截圖.png')
+    popup.close()
+    assert 'feedback' not in order(page)
+
+    # 宿舍文字選單可從目錄或首頁開啟，關閉後回到原入口。
+    page.get_by_role('searchbox').fill('宿舍')
+    dorm_launch = page.locator('#tool-catalog .catalog-launch')
+    dorm_launch.locator('strong').click()
+    expect(page.locator('#services-dialog')).to_be_visible()
+    expect(page.locator('#service-links a')).to_have_count(5)
+    expect(page.locator('#service-links img')).to_have_count(0)
+    children = page.evaluate('PORTAL_DATA.tools.find(tool => tool.id === "dorm").children')
+    for index, child in enumerate(children):
+        assert unquote(page.locator('#service-links a').nth(index).get_attribute('href')).endswith(child['screenshot'])
+    page.keyboard.press('Escape')
+    expect(page.locator('#services-dialog')).not_to_be_visible()
+    expect(page.locator('#add-dialog')).to_be_visible()
+    expect(dorm_launch).to_be_focused()
+    page.get_by_role('button', name='新增宿舍統一入口', exact=True).click()
+    page.keyboard.press('Escape')
+    page.locator('[data-id="dorm"] .tool-link').click()
+    page.get_by_role('button', name='關閉宿舍統一入口', exact=True).click()
+    expect(page.locator('[data-id="dorm"] .tool-link')).to_be_focused()
+
     # 編輯、搖晃、前移／後移、拖曳及移除。
     page.get_by_role('button', name='調整排序').click()
     expect(page.locator('#edit-tools')).to_have_attribute('aria-pressed', 'true')
@@ -88,7 +129,8 @@ with sync_playwright() as p:
     assert page.locator('[data-id="timetable"] .tool-art').evaluate('(e) => getComputedStyle(e).animationName') == 'jiggle'
     page.get_by_role('button', name='前移我的課表', exact=True).click()
     assert order(page)[0] == 'timetable'
-    page.locator('[data-id="web"]').drag_to(page.locator('[data-id="grades"]'))
+    target_box = page.locator('[data-id="grades"]').bounding_box()
+    page.locator('[data-id="web"]').drag_to(page.locator('[data-id="grades"]'), target_position={'x': target_box['width'] * .75, 'y': 50})
     assert order(page)[:3] == ['timetable', 'grades', 'web']
     page.screenshot(path=str(RESULTS / 'edit-tools.png'), full_page=True)
     page.get_by_role('button', name='移除不利處境學生助學金申請', exact=True).click()
@@ -127,10 +169,10 @@ with sync_playwright() as p:
         no_horizontal_overflow(page)
     page.set_viewport_size({'width': 390, 'height': 844})
     page.screenshot(path=str(RESULTS / 'mobile.png'), full_page=True)
-    page.get_by_role('button', name='新增工具', exact=True).click()
+    page.get_by_role('button', name='其他功能', exact=True).click()
     page.get_by_role('searchbox').fill('VPN')
     page.get_by_role('button', name='新增VPN', exact=True).click()
-    page.get_by_role('button', name='關閉新增工具').click()
+    page.get_by_role('button', name='關閉其他功能').click()
     expect(page.locator('[data-id="vpn"]')).to_have_count(1)
 
     # 減少動態效果、空清單、未知 ID、儲存損毀與儲存被封鎖。
@@ -150,7 +192,7 @@ with sync_playwright() as p:
     blocked = context.new_page()
     blocked.add_init_script("Storage.prototype.setItem = () => { throw new Error('Storage blocked'); };")
     blocked.goto(URL, wait_until='networkidle')
-    blocked.get_by_role('button', name='新增工具', exact=True).click()
+    blocked.get_by_role('button', name='其他功能', exact=True).click()
     blocked.get_by_role('searchbox').fill('VPN')
     blocked.get_by_role('button', name='新增VPN', exact=True).click()
     expect(blocked.locator('#save-state')).to_contain_text('設定僅保留於本次瀏覽')

@@ -33,10 +33,10 @@
         <button id="edit-tools" class="panel-action edit-button" type="button" aria-pressed="false"><img src="assets/icons/區塊調整icon.png" alt=""><span>調整排序</span></button>
       </div>
       <div class="systems-body">
-        <div class="section-caption"><span id="tools-hint">你的常用校園服務，都在這裡。</span><span id="tool-count"></span></div>
-        <p id="edit-hint" class="edit-hint" hidden>拖曳圖示調整順序，或使用前移／後移按鈕。按 × 可移除，完成後按「完成編輯」。</p>
+        <div class="section-caption"><!-- <span id="tools-hint">你的常用校園服務，都在這裡。</span> --><!-- <span id="tool-count">16 個常用工具</span> --></div>
+        <p id="edit-hint" class="edit-hint" hidden>拖曳圖示至藍色插入線的位置，或使用前移／後移按鈕。按 × 可移除，完成後按「完成編輯」。</p>
         <ul id="tool-grid" class="tool-grid" aria-label="常用資訊系統"></ul>
-        <div class="systems-footer"><span class="small-dot"></span><span>依欄由上至下、由左至右排列</span><span class="saved-note" id="save-state">設定儲存在此瀏覽器</span></div>
+        <div class="systems-footer"><!--<span class="small-dot"></span>--><!-- <span>依欄由上至下、由左至右排列</span> --><!-- <span class="saved-note" id="save-state">已儲存於此瀏覽器</span> --></div>
       </div>
     </section>
 
@@ -65,11 +65,17 @@
   <footer class="site-footer"><span>iNCCU 校園個人化入口</span><span>首頁設計原型 · 系統截圖僅供展示</span></footer>
 
   <dialog id="add-dialog" aria-labelledby="add-title" aria-describedby="add-description">
-    <div class="dialog-header"><div><span class="eyebrow">YOUR CAMPUS TOOLKIT</span><h2 id="add-title">新增常用工具</h2></div><button class="close-button" id="close-dialog" type="button" aria-label="關閉新增工具">×</button></div>
-    <p id="add-description">依校務 Web 分類，將需要的服務加入首頁。</p>
+    <div class="dialog-header"><div><!--<span class="eyebrow">YOUR CAMPUS TOOLKIT</span>--><h2 id="add-title">其他功能</h2></div><button class="close-button" id="close-dialog" type="button" aria-label="關閉其他功能" title="關閉其他功能"></button></div>
+    <p id="add-description">點選圖示或文字直接開啟服務，也可以加入首頁快捷。</p>
     <label class="search-box"><span aria-hidden="true">⌕</span><input id="tool-search" type="search" placeholder="搜尋工具名稱或功能" autocomplete="off" aria-label="搜尋工具"></label>
     <div id="tool-catalog" class="tool-catalog"></div>
     <p class="dialog-footnote">移除只會將捷徑從首頁隱藏，可隨時重新加入。</p>
+  </dialog>
+  <dialog id="services-dialog" aria-labelledby="services-title" aria-describedby="services-description">
+    <div class="dialog-header"><div><span class="eyebrow">CAMPUS SERVICES</span><h2 id="services-title">宿舍統一入口</h2></div><button class="close-button" id="close-services" type="button" aria-label="關閉宿舍統一入口" title="關閉宿舍統一入口"></button></div>
+    <p id="services-description">選擇服務，在新分頁開啟對應的系統截圖。</p>
+    <ul id="service-links" class="service-links"></ul>
+    <p class="dialog-footnote">截圖僅供原型展示，無法在此實際送出申請。</p>
   </dialog>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <noscript><p class="noscript">請啟用 JavaScript 以使用常用系統與行事曆。</p></noscript>

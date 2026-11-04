@@ -7,7 +7,9 @@
   const grid = document.querySelector('#tool-grid');
   const editButton = document.querySelector('#edit-tools');
   const dialog = document.querySelector('#add-dialog');
+  const servicesDialog = document.querySelector('#services-dialog');
   const search = document.querySelector('#tool-search');
+  let servicesOpener = null;
   let favorites = readFavorites();
   let editing = false;
   let draggedId = null;
@@ -36,6 +38,46 @@
     return link;
   }
 
+  // 一般工具另開目的地；群組工具開啟文字選單。首頁與其他功能共用此入口。
+  function toolLauncher(tool, className, isShortcut = false) {
+    const launcher = element(tool.children ? 'button' : 'a', className);
+    launcher.draggable = false;
+    if (tool.children) {
+      launcher.type = 'button';
+      launcher.setAttribute('aria-haspopup', 'dialog');
+      launcher.setAttribute('aria-controls', 'services-dialog');
+    } else {
+      externalLink(launcher, destination(tool));
+    }
+    launcher.addEventListener('click', event => {
+      if (isShortcut && editing) {
+        event.preventDefault();
+        return;
+      }
+      if (tool.children) openServices(tool, launcher);
+    });
+    return launcher;
+  }
+
+  function openServices(tool, opener) {
+    servicesOpener = opener;
+    document.querySelector('#services-title').textContent = tool.name;
+    const close = document.querySelector('#close-services');
+    close.setAttribute('aria-label', `關閉${tool.name}`);
+    close.title = `關閉${tool.name}`;
+    const links = document.querySelector('#service-links');
+    links.replaceChildren();
+    tool.children.forEach(service => {
+      const item = element('li');
+      const link = externalLink(element('a', '', service.name), destination(service));
+      link.title = `${service.name}（在新分頁開啟）`;
+      item.append(link);
+      links.append(item);
+    });
+    servicesDialog.showModal();
+    links.querySelector('a').focus();
+  }
+
   function readFavorites() {
     try {
       const stored = JSON.parse(localStorage.getItem(data.storageKey));
@@ -50,9 +92,9 @@
   function saveFavorites() {
     try {
       localStorage.setItem(data.storageKey, JSON.stringify(favorites));
-      document.querySelector('#save-state').textContent = '已儲存於此瀏覽器';
+      // 已儲存於此瀏覽器：首頁暫不顯示儲存狀態說明。
     } catch {
-      document.querySelector('#save-state').textContent = '瀏覽器無法儲存，設定僅保留於本次瀏覽';
+      // 瀏覽器無法儲存，設定僅保留於本次瀏覽：首頁暫不顯示儲存狀態說明。
     }
   }
 
@@ -64,7 +106,7 @@
     toastTimer = setTimeout(() => toast.classList.remove('visible'), 2800);
   }
 
-  // 根據實際區塊寬度計算欄數，確保新增按鈕總在排序最後。
+  // DOM 順序就是由左至右、再由上至下的順序；其他功能固定在最後。
   function updateGridLayout() {
     const width = grid.clientWidth;
     const columns = width >= 590 ? 4 : width >= 410 ? 3 : 2;
@@ -80,7 +122,7 @@
       item.dataset.id = id;
       item.draggable = editing;
 
-      const link = externalLink(element('a', 'tool-link'), destination(tool));
+      const link = toolLauncher(tool, 'tool-link', true);
       link.setAttribute('aria-describedby', `tip-${id}`);
       if (editing) link.setAttribute('aria-label', `${tool.name}，編輯模式，請使用前移或後移按鈕排序`);
       const art = element('span', 'tool-art');
@@ -90,21 +132,22 @@
       image.draggable = false;
       art.append(image);
       link.append(art, element('span', 'tool-name', tool.name));
-      link.addEventListener('click', event => { if (editing) event.preventDefault(); });
-      const tip = element('span', 'tool-tooltip', `${tool.tip}${tool.screenshot ? '（開啟系統截圖）' : '（另開網站）'}`);
+      const actionHint = tool.children ? '（開啟服務選單）' : tool.screenshot ? '（開啟系統截圖）' : '（另開網站）';
+      const tip = element('span', 'tool-tooltip', `${tool.tip}${actionHint}`);
       tip.id = `tip-${id}`;
       tip.setAttribute('role', 'tooltip');
 
-      const remove = element('button', 'remove-tool', '×');
+      const remove = element('button', 'remove-tool');
       remove.type = 'button';
       remove.setAttribute('aria-label', `移除${tool.name}`);
+      remove.title = `移除${tool.name}（可從其他功能重新加入）`;
       remove.addEventListener('click', () => {
         favorites = favorites.filter(value => value !== id);
         saveFavorites();
         renderTools();
         const nextItem = grid.children[Math.min(index, favorites.length)];
         (nextItem.querySelector('.remove-tool') || nextItem.querySelector('button')).focus();
-        announce(`已移除「${tool.name}」，可從新增工具重新加入。`);
+        announce(`已移除「${tool.name}」，可從其他功能重新加入。`);
       });
 
       const controls = element('div', 'move-controls');
@@ -131,8 +174,12 @@
     const addButton = element('button', 'tool-link');
     addButton.id = 'add-tool';
     addButton.type = 'button';
-    addButton.setAttribute('aria-label', '新增工具');
-    addButton.append(element('span', 'tool-art add-art', '+'), element('span', 'tool-name', '新增工具'));
+    addButton.setAttribute('aria-label', '其他功能');
+    addButton.title = '瀏覽其他功能，直接開啟服務或加入快捷';
+    const addArt = element('span', 'tool-art add-art');
+    addArt.setAttribute('aria-hidden', 'true');
+    addArt.append(element('span', 'add-symbol', '+'));
+    addButton.append(addArt, element('span', 'tool-name', '其他功能'));
     addButton.setAttribute('aria-haspopup', 'dialog');
     addButton.addEventListener('click', () => {
       search.value = '';
@@ -142,7 +189,7 @@
     });
     addItem.append(addButton);
     grid.append(addItem);
-    document.querySelector('#tool-count').textContent = `${favorites.length} 個常用工具`;
+    // `${favorites.length} 個常用工具`：首頁暫不顯示工具數量。
     updateGridLayout();
   }
 
@@ -169,13 +216,15 @@
       matches.forEach(tool => {
         resultCount++;
         const row = element('div', 'catalog-row');
+        const launcher = toolLauncher(tool, 'catalog-launch');
+        launcher.title = tool.children ? '開啟服務選單' : '在新分頁開啟';
         const image = element('img');
         image.src = `assets/icons/${tool.icon}`;
         image.alt = '';
         const copy = element('div', 'catalog-copy');
         copy.append(element('strong', '', tool.name), element('p', '', tool.tip));
         const added = favorites.includes(tool.id);
-        const button = element('button', '', added ? '已加入' : '＋ 新增');
+        const button = element('button', 'catalog-add', added ? '已加入' : '＋ 快捷');
         button.type = 'button';
         button.disabled = added;
         button.dataset.addId = tool.id;
@@ -188,7 +237,8 @@
           renderCatalog(tool.id);
           announce(`已將「${tool.name}」加入首頁。`);
         });
-        row.append(image, copy, button);
+        launcher.append(image, copy);
+        row.append(launcher, button);
         section.append(row);
       });
       catalog.append(section);
@@ -222,6 +272,47 @@
     if (event.target === dialog && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) dialog.close();
   });
 
+  document.querySelector('#close-services').addEventListener('click', () => servicesDialog.close());
+  servicesDialog.addEventListener('close', () => {
+    // 從其他功能開啟時，關閉子選單只返回原視窗，不關閉其他功能。
+    if (servicesOpener?.isConnected) servicesOpener.focus();
+    servicesOpener = null;
+  });
+  servicesDialog.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      event.stopPropagation();
+      servicesDialog.close();
+    }
+  });
+  servicesDialog.addEventListener('click', event => {
+    const bounds = servicesDialog.getBoundingClientRect();
+    if (event.target === servicesDialog && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) servicesDialog.close();
+  });
+
+  // 找到滑鼠最近的格子，讓圖示間的空隙也能接收拖放。
+  // boundary 是原清單的插入間隙（0 到 length），不是交換兩個工具。
+  function insertionAt(clientX, clientY) {
+    let nearest = null;
+    let nearestDistance = Infinity;
+    Array.from(grid.children).forEach((item, index) => {
+      const bounds = item.getBoundingClientRect();
+      const dx = Math.max(bounds.left - clientX, 0, clientX - bounds.right);
+      const dy = Math.max(bounds.top - clientY, 0, clientY - bounds.bottom);
+      const distance = dx * dx + dy * dy;
+      if (distance < nearestDistance) {
+        const after = Boolean(item.dataset.id) && clientX >= bounds.left + bounds.width / 2;
+        nearest = { item, boundary: index + (after ? 1 : 0), after };
+        nearestDistance = distance;
+      }
+    });
+    return nearest;
+  }
+
+  function clearInsertionMarker() {
+    grid.querySelectorAll('.insert-before, .insert-after').forEach(item => item.classList.remove('insert-before', 'insert-after'));
+  }
+
   // 桌機原生拖曳；鍵盤與觸控使用同一組前移／後移操作。
   grid.addEventListener('dragstart', event => {
     const item = event.target.closest('[data-id]');
@@ -233,24 +324,32 @@
   });
   grid.addEventListener('dragover', event => {
     if (!editing || !draggedId) return;
-    const target = event.target.closest('.tool-item');
-    if (!target) return;
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
-    grid.querySelectorAll('.drop-target').forEach(item => item.classList.remove('drop-target'));
-    target.classList.add('drop-target');
+    clearInsertionMarker();
+    const insertion = insertionAt(event.clientX, event.clientY);
+    if (insertion) insertion.item.classList.add(insertion.after ? 'insert-after' : 'insert-before');
   });
   grid.addEventListener('drop', event => {
     if (!editing || !draggedId) return;
     event.preventDefault();
-    const target = event.target.closest('.tool-item');
-    if (target) moveTool(draggedId, target.dataset.id ? favorites.indexOf(target.dataset.id) : favorites.length - 1);
+    const insertion = insertionAt(event.clientX, event.clientY);
+    if (insertion) {
+      const sourceIndex = favorites.indexOf(draggedId);
+      // 先移除來源後，其右側的插入間隙索引會少一。
+      const targetIndex = insertion.boundary - (sourceIndex < insertion.boundary ? 1 : 0);
+      moveTool(draggedId, targetIndex);
+    }
     clearDragState();
   });
   function clearDragState() {
     draggedId = null;
-    grid.querySelectorAll('.is-dragging, .drop-target').forEach(item => item.classList.remove('is-dragging', 'drop-target'));
+    clearInsertionMarker();
+    grid.querySelectorAll('.is-dragging').forEach(item => item.classList.remove('is-dragging'));
   }
+  grid.addEventListener('dragleave', event => {
+    if (!grid.contains(event.relatedTarget)) clearInsertionMarker();
+  });
   grid.addEventListener('dragend', clearDragState);
 
   function renderCalendar() {

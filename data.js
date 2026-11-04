@@ -2,7 +2,8 @@
 window.PORTAL_DATA = {
   storageKey: 'inccu-favorite-tools-v1',
   categories: ['校務入口', '學術服務', '財務服務', '資訊服務'],
-  defaultFavorites: ['web', 'timetable', 'grades', 'moodle', 'tuition', 'holistic', 'scholarship', 'registration', 'courses', 'library', 'evaluation'],
+  // 需求清單重複列出學生請假系統；保留唯一項目，並沿用既有常用的成績查詢補足 11 個快捷。
+  defaultFavorites: ['timetable', 'courses', 'moodle', 'leave', 'tuition', 'holistic', 'registration', 'library', 'grades', 'dorm', 'mail'],
   tools: [
     { id: 'web', name: '校務 Web 系統入口', category: '校務入口', icon: '所有校務系統Web入口icon.png', screenshot: '所有校務Web資訊系統截圖.png', tip: '查看完整校務 Web 學生資訊系統，包含學術、財務及資訊服務。' },
     { id: 'timetable', name: '我的課表', category: '學術服務', icon: '我的課表icon.png', screenshot: '我的課表截圖.png', tip: '查看本學期修課科目、上課時間與教室。' },
@@ -19,8 +20,24 @@ window.PORTAL_DATA = {
     { id: 'library', name: '政大圖書館', category: '資訊服務', icon: '圖書館icon.png', url: 'https://www.lib.nccu.edu.tw/', tip: '查詢館藏、電子資源及圖書館服務。' },
     { id: 'software', name: '校園授權軟體', category: '資訊服務', icon: '校園授權軟體icon.png', url: 'https://software.nccu.edu.tw/SoftwareM/', tip: '查看與下載校園授權軟體，依身分登入使用。' },
     { id: 'vpn', name: 'VPN', category: '資訊服務', icon: 'vpnicon.png', url: 'https://net.nccu.edu.tw/sslvpn/', tip: '查看校園 SSL VPN 遠端連線設定與使用說明。' },
-    // 尚無專用素材，暫沿用 Web 圖示與完整系統截圖。
-    { id: 'leave', name: '學生請假系統', category: '資訊服務', icon: '所有校務系統Web入口icon.png', screenshot: '所有校務Web資訊系統截圖.png', tip: '透過校務 Web「資訊服務」進入學生請假系統；目前展示完整 Web 截圖。' }
+    { id: 'leave', name: '學生請假系統', category: '學術服務', icon: '學生請假系統icon.png', screenshot: '學生請假系統截圖.png', tip: '申請學生假單、查詢請假紀錄與處理進度。' },
+    { id: 'feedback', name: '校務建言', category: '校務入口', icon: '校務建言icon.png', screenshot: '校務建言截圖.png', tip: '提出校務建議、查詢歷史建言與學校回覆。' },
+    { id: 'broadcast', name: '全校群組訊息發送', category: '資訊服務', icon: '全校群組訊息發送icon.png', screenshot: '全校群組訊息發送截圖.png', tip: '發送校內群組訊息；需先申請管理權限，目前展示權限提示畫面。' },
+    { id: 'survey', name: '萊Survey問卷', category: '資訊服務', icon: '萊Survey問卷icon.png', screenshot: '萊Survey問卷截圖.png', tip: '建立與管理線上問卷，查看問卷清單。' },
+    { id: 'helpdesk', name: '線上服務台', category: '資訊服務', icon: '線上服務台icon.png', screenshot: '線上服務台截圖.png', tip: '向電算中心提出問題諮詢，查詢申請與處理紀錄。' },
+    {
+      id: 'dorm', name: '宿舍統一入口', category: '資訊服務', icon: '宿舍統一入口icon.png',
+      tip: '查看學生住宿申請、申請結果、宿舍請修、住宿證明書與包裹信件查詢。',
+      // 群組工具只設定 children；每個子項目使用 screenshot 或 url。
+      children: [
+        { name: '學生住宿申請', screenshot: '學生住宿申請截圖.png' },
+        { name: '學生住宿申請結果查詢', screenshot: '學生住宿申請結果查詢截圖.png' },
+        { name: '宿舍請修', screenshot: '宿舍請修截圖.png' },
+        { name: '住宿證明書', screenshot: '住宿證明書截圖.png' },
+        { name: '宿舍包裹信件查詢', screenshot: '宿舍包裹信件查詢截圖.png' }
+      ]
+    },
+    { id: 'mail', name: 'NCCU郵件信箱', category: '資訊服務', icon: 'NCCU郵件信箱icon.png', url: 'https://nccu.edu.tw/indexs.html', tip: '開啟指定的政大網站入口，前往 NCCU 郵件服務。' }
   ],
   calendar: {
     year: 2026,
