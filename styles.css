@@ -114,7 +114,7 @@ button.day-number[aria-pressed=true] { box-shadow: inset 0 0 0 1.5px currentColo
 .day-number.is-exam { background:  #e8edf0; color: var(--ink); }
 .agenda > li.is-holiday .agenda-date, .agenda > li.is-holiday .agenda-items { color: #c34d4d; }
 .day-number[aria-current=date] { outline: 1.5px solid var(--blue); outline-offset: -2px; }
-.calendar-legend { display: flex; align-items: center; justify-content: center; gap: 7px; margin: 15px 0 0; color: var(--muted); font-size: var(--calendar-copy-size); }
+.calendar-legend { margin-top: 50px; display: flex; align-items: center; justify-content: center; gap: 14px; margin: px 0 0; color: var(--muted); font-size: 18px /*var(--calendar-copy-size)*/; }
 .event-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--blue); }
 .today-key { width: 9px; height: 9px; border: 1px solid var(--blue); border-radius: 2px; margin-left: 9px; }
 .agenda-area { border-left: 1px solid var(--line); padding-left: 15px; min-width: 0; }
