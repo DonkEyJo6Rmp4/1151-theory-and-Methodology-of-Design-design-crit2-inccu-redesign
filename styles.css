@@ -28,6 +28,8 @@ button { color: inherit; }
 .skip-link:focus { transform: translateY(0); }
 .site-header { height: 108px; background: var(--blue); display: flex; align-items: center; justify-content: space-between; padding: 12px 36px; }
 .brand { display: inline-flex; }
+/* picture 不增加文字行高，保持原本的頁首與按鈕圖示對齊。 */
+.brand picture, .header-tool picture, .edit-button picture { display: flex; }
 .brand img { width: 202px; height: 83px; object-fit: contain; }
 .header-tools { display: flex; align-items: center; gap: 24px; }
 .header-tool { border: 0; padding: 0; color: white; background: none; display: grid; justify-items: center; gap: 3px; cursor: default; }

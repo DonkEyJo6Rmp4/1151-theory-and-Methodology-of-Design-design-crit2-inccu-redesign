@@ -1,0 +1,357 @@
+{
+  "icons": {
+    "originalBytes": 6308899,
+    "selectedBytes": 267322,
+    "files": [
+      {
+        "original": "assets/icons/NCCU郵件信箱icon.png",
+        "selected": "assets/optimized/icons/NCCU郵件信箱icon.webp",
+        "originalBytes": 279681,
+        "webpBytes": 8572,
+        "selectedBytes": 8572
+      },
+      {
+        "original": "assets/icons/Usericon.png",
+        "selected": "assets/optimized/icons/Usericon.webp",
+        "originalBytes": 7461,
+        "webpBytes": 3810,
+        "selectedBytes": 3810
+      },
+      {
+        "original": "assets/icons/iNCCUicon.png",
+        "selected": "assets/optimized/icons/iNCCUicon.webp",
+        "originalBytes": 81706,
+        "webpBytes": 17830,
+        "selectedBytes": 17830
+      },
+      {
+        "original": "assets/icons/informationicon.png",
+        "selected": "assets/optimized/icons/informationicon.webp",
+        "originalBytes": 9319,
+        "webpBytes": 5062,
+        "selectedBytes": 5062
+      },
+      {
+        "original": "assets/icons/moodle45icon.png",
+        "selected": "assets/optimized/icons/moodle45icon.webp",
+        "originalBytes": 278966,
+        "webpBytes": 9732,
+        "selectedBytes": 9732
+      },
+      {
+        "original": "assets/icons/vpnicon.png",
+        "selected": "assets/optimized/icons/vpnicon.webp",
+        "originalBytes": 267196,
+        "webpBytes": 9498,
+        "selectedBytes": 9498
+      },
+      {
+        "original": "assets/icons/不利處境學生助學金申請icon.png",
+        "selected": "assets/optimized/icons/不利處境學生助學金申請icon.webp",
+        "originalBytes": 287585,
+        "webpBytes": 10074,
+        "selectedBytes": 10074
+      },
+      {
+        "original": "assets/icons/個人設定icon.png",
+        "selected": "assets/optimized/icons/個人設定icon.webp",
+        "originalBytes": 7345,
+        "webpBytes": 3750,
+        "selectedBytes": 3750
+      },
+      {
+        "original": "assets/icons/全人系統icon.png",
+        "selected": "assets/optimized/icons/全人系統icon.webp",
+        "originalBytes": 264937,
+        "webpBytes": 8802,
+        "selectedBytes": 8802
+      },
+      {
+        "original": "assets/icons/全校群組訊息發送icon.png",
+        "selected": "assets/optimized/icons/全校群組訊息發送icon.webp",
+        "originalBytes": 287192,
+        "webpBytes": 10176,
+        "selectedBytes": 10176
+      },
+      {
+        "original": "assets/icons/全校課程查詢系統icon.png",
+        "selected": "assets/optimized/icons/全校課程查詢系統icon.webp",
+        "originalBytes": 280901,
+        "webpBytes": 12252,
+        "selectedBytes": 12252
+      },
+      {
+        "original": "assets/icons/區塊調整icon.png",
+        "selected": "assets/optimized/icons/區塊調整icon.webp",
+        "originalBytes": 3608,
+        "webpBytes": 1388,
+        "selectedBytes": 1388
+      },
+      {
+        "original": "assets/icons/圖書館icon.png",
+        "selected": "assets/optimized/icons/圖書館icon.webp",
+        "originalBytes": 309529,
+        "webpBytes": 11330,
+        "selectedBytes": 11330
+      },
+      {
+        "original": "assets/icons/學生請假系統icon.png",
+        "selected": "assets/optimized/icons/學生請假系統icon.webp",
+        "originalBytes": 300774,
+        "webpBytes": 10058,
+        "selectedBytes": 10058
+      },
+      {
+        "original": "assets/icons/宿舍統一入口icon.png",
+        "selected": "assets/optimized/icons/宿舍統一入口icon.webp",
+        "originalBytes": 247390,
+        "webpBytes": 7032,
+        "selectedBytes": 7032
+      },
+      {
+        "original": "assets/icons/成績查詢icon.png",
+        "selected": "assets/optimized/icons/成績查詢icon.webp",
+        "originalBytes": 276987,
+        "webpBytes": 8824,
+        "selectedBytes": 8824
+      },
+      {
+        "original": "assets/icons/我的繳費單icon.png",
+        "selected": "assets/optimized/icons/我的繳費單icon.webp",
+        "originalBytes": 265684,
+        "webpBytes": 8940,
+        "selectedBytes": 8940
+      },
+      {
+        "original": "assets/icons/我的課表icon.png",
+        "selected": "assets/optimized/icons/我的課表icon.webp",
+        "originalBytes": 279211,
+        "webpBytes": 10396,
+        "selectedBytes": 10396
+      },
+      {
+        "original": "assets/icons/所有校務系統Web入口icon.png",
+        "selected": "assets/optimized/icons/所有校務系統Web入口icon.webp",
+        "originalBytes": 320447,
+        "webpBytes": 12230,
+        "selectedBytes": 12230
+      },
+      {
+        "original": "assets/icons/教學意見調查icon.png",
+        "selected": "assets/optimized/icons/教學意見調查icon.webp",
+        "originalBytes": 276285,
+        "webpBytes": 9966,
+        "selectedBytes": 9966
+      },
+      {
+        "original": "assets/icons/校務建言icon.png",
+        "selected": "assets/optimized/icons/校務建言icon.webp",
+        "originalBytes": 267865,
+        "webpBytes": 9832,
+        "selectedBytes": 9832
+      },
+      {
+        "original": "assets/icons/校園授權軟體icon.png",
+        "selected": "assets/optimized/icons/校園授權軟體icon.webp",
+        "originalBytes": 297519,
+        "webpBytes": 10680,
+        "selectedBytes": 10680
+      },
+      {
+        "original": "assets/icons/活動報名系統icon.png",
+        "selected": "assets/optimized/icons/活動報名系統icon.webp",
+        "originalBytes": 248132,
+        "webpBytes": 6460,
+        "selectedBytes": 6460
+      },
+      {
+        "original": "assets/icons/獎助學金查詢icon.png",
+        "selected": "assets/optimized/icons/獎助學金查詢icon.webp",
+        "originalBytes": 266527,
+        "webpBytes": 9322,
+        "selectedBytes": 9322
+      },
+      {
+        "original": "assets/icons/緊急通聯icon.png",
+        "selected": "assets/optimized/icons/緊急通聯icon.webp",
+        "originalBytes": 13128,
+        "webpBytes": 10586,
+        "selectedBytes": 10586
+      },
+      {
+        "original": "assets/icons/線上服務台icon.png",
+        "selected": "assets/optimized/icons/線上服務台icon.webp",
+        "originalBytes": 298551,
+        "webpBytes": 12814,
+        "selectedBytes": 12814
+      },
+      {
+        "original": "assets/icons/編輯icon.png",
+        "selected": "assets/optimized/icons/編輯icon.webp",
+        "originalBytes": 6758,
+        "webpBytes": 2884,
+        "selectedBytes": 2884
+      },
+      {
+        "original": "assets/icons/萊Survey問卷icon.png",
+        "selected": "assets/optimized/icons/萊Survey問卷icon.webp",
+        "originalBytes": 296906,
+        "webpBytes": 11642,
+        "selectedBytes": 11642
+      },
+      {
+        "original": "assets/icons/設定icon.png",
+        "selected": "assets/optimized/icons/設定icon.webp",
+        "originalBytes": 6398,
+        "webpBytes": 3144,
+        "selectedBytes": 3144
+      },
+      {
+        "original": "assets/icons/遺失物品查詢icon.png",
+        "selected": "assets/optimized/icons/遺失物品查詢icon.webp",
+        "originalBytes": 274911,
+        "webpBytes": 10236,
+        "selectedBytes": 10236
+      }
+    ]
+  },
+  "screenshots": {
+    "originalBytes": 13529417,
+    "selectedBytes": 5844216,
+    "files": [
+      {
+        "original": "assets/screenshots/不利處境學生助學金申請截圖.png",
+        "selected": "assets/optimized/screenshots/不利處境學生助學金申請截圖.webp",
+        "originalBytes": 864215,
+        "webpBytes": 430246,
+        "selectedBytes": 430246
+      },
+      {
+        "original": "assets/screenshots/住宿證明書截圖.png",
+        "selected": "assets/optimized/screenshots/住宿證明書截圖.webp",
+        "originalBytes": 809960,
+        "webpBytes": 390316,
+        "selectedBytes": 390316
+      },
+      {
+        "original": "assets/screenshots/個人獎助學金查詢截圖.png",
+        "selected": "assets/optimized/screenshots/個人獎助學金查詢截圖.webp",
+        "originalBytes": 803709,
+        "webpBytes": 387018,
+        "selectedBytes": 387018
+      },
+      {
+        "original": "assets/screenshots/全人系統截圖.png",
+        "selected": "assets/optimized/screenshots/全人系統截圖.webp",
+        "originalBytes": 1012043,
+        "webpBytes": 453352,
+        "selectedBytes": 453352
+      },
+      {
+        "original": "assets/screenshots/全校群組訊息發送截圖.png",
+        "selected": "assets/optimized/screenshots/全校群組訊息發送截圖.webp",
+        "originalBytes": 152298,
+        "webpBytes": 18484,
+        "selectedBytes": 18484
+      },
+      {
+        "original": "assets/screenshots/學生住宿申請截圖.png",
+        "selected": "assets/optimized/screenshots/學生住宿申請截圖.webp",
+        "originalBytes": 190003,
+        "webpBytes": 28428,
+        "selectedBytes": 28428
+      },
+      {
+        "original": "assets/screenshots/學生住宿申請結果查詢截圖.png",
+        "selected": "assets/optimized/screenshots/學生住宿申請結果查詢截圖.webp",
+        "originalBytes": 208674,
+        "webpBytes": 35284,
+        "selectedBytes": 35284
+      },
+      {
+        "original": "assets/screenshots/學生請假系統截圖.png",
+        "selected": "assets/optimized/screenshots/學生請假系統截圖.webp",
+        "originalBytes": 857072,
+        "webpBytes": 405726,
+        "selectedBytes": 405726
+      },
+      {
+        "original": "assets/screenshots/宿舍包裹信件查詢截圖.png",
+        "selected": "assets/optimized/screenshots/宿舍包裹信件查詢截圖.webp",
+        "originalBytes": 769523,
+        "webpBytes": 374112,
+        "selectedBytes": 374112
+      },
+      {
+        "original": "assets/screenshots/宿舍請修截圖.png",
+        "selected": "assets/optimized/screenshots/宿舍請修截圖.webp",
+        "originalBytes": 831916,
+        "webpBytes": 395552,
+        "selectedBytes": 395552
+      },
+      {
+        "original": "assets/screenshots/成績查詢系統截圖new.png",
+        "selected": "assets/optimized/screenshots/成績查詢系統截圖new.webp",
+        "originalBytes": 904339,
+        "webpBytes": 411618,
+        "selectedBytes": 411618
+      },
+      {
+        "original": "assets/screenshots/我的繳費單截圖.png",
+        "selected": "assets/optimized/screenshots/我的繳費單截圖.webp",
+        "originalBytes": 220988,
+        "webpBytes": 37654,
+        "selectedBytes": 37654
+      },
+      {
+        "original": "assets/screenshots/我的課表截圖.png",
+        "selected": "assets/optimized/screenshots/我的課表截圖.webp",
+        "originalBytes": 835726,
+        "webpBytes": 392720,
+        "selectedBytes": 392720
+      },
+      {
+        "original": "assets/screenshots/所有校務Web資訊系統截圖.png",
+        "selected": "assets/optimized/screenshots/所有校務Web資訊系統截圖.webp",
+        "originalBytes": 1771366,
+        "webpBytes": 673972,
+        "selectedBytes": 673972
+      },
+      {
+        "original": "assets/screenshots/教學意見調查截圖.png",
+        "selected": "assets/optimized/screenshots/教學意見調查截圖.webp",
+        "originalBytes": 783650,
+        "webpBytes": 377560,
+        "selectedBytes": 377560
+      },
+      {
+        "original": "assets/screenshots/校務建言截圖.png",
+        "selected": "assets/optimized/screenshots/校務建言截圖.webp",
+        "originalBytes": 609747,
+        "webpBytes": 200124,
+        "selectedBytes": 200124
+      },
+      {
+        "original": "assets/screenshots/線上服務台截圖.png",
+        "selected": "assets/optimized/screenshots/線上服務台截圖.webp",
+        "originalBytes": 741440,
+        "webpBytes": 323794,
+        "selectedBytes": 323794
+      },
+      {
+        "original": "assets/screenshots/萊Survey問卷截圖.png",
+        "selected": "assets/optimized/screenshots/萊Survey問卷截圖.webp",
+        "originalBytes": 304840,
+        "webpBytes": 80876,
+        "selectedBytes": 80876
+      },
+      {
+        "original": "assets/screenshots/輔系雙主修申請修讀放棄修讀系統截圖.png",
+        "selected": "assets/optimized/screenshots/輔系雙主修申請修讀放棄修讀系統截圖.webp",
+        "originalBytes": 857908,
+        "webpBytes": 427380,
+        "selectedBytes": 427380
+      }
+    ]
+  }
+}

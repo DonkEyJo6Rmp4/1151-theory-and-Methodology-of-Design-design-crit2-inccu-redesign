@@ -9,6 +9,9 @@
   const dialog = document.querySelector('#add-dialog');
   const servicesDialog = document.querySelector('#services-dialog');
   const search = document.querySelector('#tool-search');
+  const images = window.PortalImages;
+  const homeImages = images.createLoader();
+  const catalogImages = images.createLoader(dialog);
   let servicesOpener = null;
   let favorites = readFavorites();
   let editing = false;
@@ -24,7 +27,8 @@
   }
 
   function screenshotUrl(filename) {
-    return `assets/screenshots/${encodeURIComponent(filename)}`;
+    // 截圖只提供連結，使用者點選後才下載；所有入口共用最佳化版本。
+    return images.url(`assets/screenshots/${filename}`);
   }
 
   function destination(item) {
@@ -107,15 +111,21 @@
   }
 
   // DOM 順序就是由左至右、再由上至下的順序；其他功能固定在最後。
-  function updateGridLayout() {
+  function toolColumnCount() {
     const width = grid.clientWidth;
-    const columns = width >= 590 ? 4 : width >= 410 ? 3 : 2;
+    return width >= 590 ? 4 : width >= 410 ? 3 : 2;
+  }
+
+  function updateGridLayout() {
+    const columns = toolColumnCount();
     grid.style.setProperty('--tool-columns', columns);
     grid.style.setProperty('--tool-rows', Math.ceil((favorites.length + 1) / columns));
   }
 
   function renderTools() {
+    homeImages.reset();
     grid.replaceChildren();
+    const firstRowCount = toolColumnCount();
     favorites.forEach((id, index) => {
       const tool = toolsById.get(id);
       const item = element('li', 'tool-item');
@@ -127,7 +137,8 @@
       if (editing) link.setAttribute('aria-label', `${tool.name}，編輯模式，請使用前移或後移按鈕排序`);
       const art = element('span', 'tool-art');
       const image = element('img');
-      image.src = `assets/icons/${tool.icon}`;
+      // 第一排立即載入，其餘圖示進入畫面附近才開始下載。
+      homeImages.prepare(image, `assets/icons/${tool.icon}`, index < firstRowCount);
       image.alt = '';
       image.draggable = false;
       art.append(image);
@@ -185,12 +196,14 @@
       search.value = '';
       renderCatalog();
       dialog.showModal();
+      catalogImages.observe();
       search.focus();
     });
     addItem.append(addButton);
     grid.append(addItem);
     // `${favorites.length} 個常用工具`：首頁暫不顯示工具數量。
     updateGridLayout();
+    homeImages.observe();
   }
 
   function moveTool(id, targetIndex) {
@@ -204,6 +217,7 @@
   }
 
   function renderCatalog(focusId) {
+    catalogImages.reset();
     const catalog = document.querySelector('#tool-catalog');
     catalog.replaceChildren();
     const query = search.value.trim().toLocaleLowerCase();
@@ -219,7 +233,7 @@
         const launcher = toolLauncher(tool, 'catalog-launch');
         launcher.title = tool.children ? '開啟服務選單' : '在新分頁開啟';
         const image = element('img');
-        image.src = `assets/icons/${tool.icon}`;
+        catalogImages.prepare(image, `assets/icons/${tool.icon}`);
         image.alt = '';
         const copy = element('div', 'catalog-copy');
         copy.append(element('strong', '', tool.name), element('p', '', tool.tip));
@@ -244,6 +258,7 @@
       catalog.append(section);
     });
     if (!resultCount) catalog.append(element('p', 'empty-search', '找不到符合的工具，請試試其他關鍵字。'));
+    if (dialog.open) catalogImages.observe();
     // 新增後按鈕已停用，將焦點移到搜尋欄，保留原搜尋內容。
     if (focusId) search.focus();
   }
@@ -259,7 +274,10 @@
   });
   search.addEventListener('input', () => renderCatalog());
   document.querySelector('#close-dialog').addEventListener('click', () => dialog.close());
-  dialog.addEventListener('close', () => document.querySelector('#add-tool').focus());
+  dialog.addEventListener('close', () => {
+    catalogImages.reset();
+    document.querySelector('#add-tool').focus();
+  });
   dialog.addEventListener('keydown', event => {
     // 搜尋欄原生 Escape 會先清除文字；在對話框中統一為關閉並歸還焦點。
     if (event.key === 'Escape') {

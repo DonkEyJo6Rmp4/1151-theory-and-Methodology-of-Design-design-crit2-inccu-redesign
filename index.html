@@ -14,6 +14,8 @@
   <link rel="stylesheet" href="header-menu.css">
   <script src="header-menu.js" defer></script>
   <script src="data.js" defer></script>
+  <script src="image-assets.js" defer></script>
+  <script src="image-loader.js" defer></script>
   <script src="app.js" defer></script>
   <!-- 政大焦點由排程更新校園新聞資料，獨立於系統入口與行事曆的互動。 -->
   <script src="announcements-data.js" defer></script>
@@ -22,11 +24,12 @@
 <body>
   <a class="skip-link" href="#main">跳至主要內容</a>
   <header class="site-header">
-    <a class="brand" href="./" aria-label="iNCCU 愛政大首頁"><img src="assets/icons/iNCCUicon.png" alt="iNCCU 愛政大 校園個人化入口" width="550" height="226"></a>
+    <!-- picture 直接選取較小的 WebP；原 PNG 保留作為相容與載入失敗時的來源。 -->
+    <a class="brand" href="./" aria-label="iNCCU 愛政大首頁"><picture><source type="image/webp" srcset="assets/optimized/icons/iNCCUicon.webp"><img src="assets/icons/iNCCUicon.png" data-original-src="assets/icons/iNCCUicon.png" alt="iNCCU 愛政大 校園個人化入口" width="404" height="165" decoding="async" fetchpriority="high"></picture></a>
     <div class="header-tools" role="group" aria-label="頁首功能選單">
-      <button class="header-tool" type="button" data-header-dialog="personal-dialog" aria-haspopup="dialog" aria-controls="personal-dialog" aria-label="個人設定" title="個人設定"><img src="assets/icons/個人設定icon.png" alt=""><span>個人設定</span></button>
-      <button class="header-tool" type="button" data-header-dialog="information-dialog" aria-haspopup="dialog" aria-controls="information-dialog" aria-label="資訊" title="資訊"><img src="assets/icons/informationicon.png" alt=""><span>資訊</span></button>
-      <button class="header-tool" type="button" data-header-dialog="emergency-dialog" aria-haspopup="dialog" aria-controls="emergency-dialog" aria-label="緊急通聯" title="緊急通聯"><img src="assets/icons/緊急通聯icon.png" alt=""><span>緊急通聯</span></button>
+      <button class="header-tool" type="button" data-header-dialog="personal-dialog" aria-haspopup="dialog" aria-controls="personal-dialog" aria-label="個人設定" title="個人設定"><picture><source type="image/webp" srcset="assets/optimized/icons/個人設定icon.webp"><img src="assets/icons/個人設定icon.png" data-original-src="assets/icons/個人設定icon.png" alt="" width="136" height="163" decoding="async"></picture><span>個人設定</span></button>
+      <button class="header-tool" type="button" data-header-dialog="information-dialog" aria-haspopup="dialog" aria-controls="information-dialog" aria-label="資訊" title="資訊"><picture><source type="image/webp" srcset="assets/optimized/icons/informationicon.webp"><img src="assets/icons/informationicon.png" data-original-src="assets/icons/informationicon.png" alt="" width="165" height="165" decoding="async"></picture><span>資訊</span></button>
+      <button class="header-tool" type="button" data-header-dialog="emergency-dialog" aria-haspopup="dialog" aria-controls="emergency-dialog" aria-label="緊急通聯" title="緊急通聯"><picture><source type="image/webp" srcset="assets/optimized/icons/緊急通聯icon.webp"><img src="assets/icons/緊急通聯icon.png" data-original-src="assets/icons/緊急通聯icon.png" alt="" width="180" height="163" decoding="async"></picture><span>緊急通聯</span></button>
     </div>
   </header>
 
@@ -34,7 +37,7 @@
     <section class="panel systems-panel" aria-labelledby="systems-title">
       <div class="panel-header">
         <h1 id="systems-title">資訊系統入口</h1>
-        <button id="edit-tools" class="panel-action edit-button" type="button" aria-pressed="false"><img src="assets/icons/區塊調整icon.png" alt=""><span>調整排序</span></button>
+        <button id="edit-tools" class="panel-action edit-button" type="button" aria-pressed="false"><picture><source type="image/webp" srcset="assets/optimized/icons/區塊調整icon.webp"><img src="assets/icons/區塊調整icon.png" data-original-src="assets/icons/區塊調整icon.png" alt="" width="122" height="122" decoding="async"></picture><span>調整排序</span></button>
       </div>
       <div class="systems-body">
         <div class="section-caption"><!-- <span id="tools-hint">你的常用校園服務，都在這裡。</span> --><!-- <span id="tool-count">16 個常用工具</span> --></div>
