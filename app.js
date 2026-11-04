@@ -13,6 +13,7 @@
   let favorites = readFavorites();
   let editing = false;
   let draggedId = null;
+  let activeCalendarMonth = data.calendar.month;
   let newsIndex = 0;
   let toastTimer;
 
@@ -354,11 +355,27 @@
 
   function renderCalendar() {
     const calendar = data.calendar;
+    const month = activeCalendarMonth;
+    const monthConfig = calendar.months?.[month];
+    const events = monthConfig?.events ?? calendar.events;
+    const firstWeek = monthConfig?.firstWeek ?? calendar.firstWeek;
     const table = document.querySelector('#month-calendar');
-    document.querySelector('.month-number').textContent = calendar.month;
-    document.querySelector('.month-label').replaceChildren(document.createTextNode('月 '), element('span', '', calendar.year));
+    document.querySelector('.month-number').textContent = month;
+    document.querySelector('.year-label').textContent = calendar.year;
     document.querySelector('.semester-label').textContent = calendar.semester;
-    table.querySelector('caption').textContent = `${calendar.year} 年 ${calendar.month} 月學校行事曆，左欄為學期週次`;
+    table.querySelector('caption').textContent = `${calendar.year} 年 ${month} 月學校行事曆，左欄為學期週次`;
+    table.querySelectorAll('thead, tbody').forEach(section => section.remove());
+    const previousMonth = document.querySelector('#month-prev');
+    const nextMonth = document.querySelector('#month-next');
+    // 顯示月份可跨年；可否切換仍由目前已提供的月份資料決定。
+    const previousLabel = month === 1 ? 12 : month - 1;
+    const nextLabel = month === 12 ? 1 : month + 1;
+    previousMonth.textContent = `${previousLabel}月`;
+    nextMonth.textContent = `${nextLabel}月`;
+    previousMonth.disabled = !calendar.months?.[month - 1];
+    nextMonth.disabled = !calendar.months?.[month + 1];
+    previousMonth.setAttribute('aria-label', `切換至 ${previousLabel} 月`);
+    nextMonth.setAttribute('aria-label', `切換至 ${nextLabel} 月`);
     const header = element('thead');
     const headerRow = element('tr');
     ['週', '日', '一', '二', '三', '四', '五', '六'].forEach(label => {
@@ -369,35 +386,63 @@
     header.append(headerRow);
     table.append(header);
     const body = element('tbody');
-    const firstDay = new Date(calendar.year, calendar.month - 1, 1).getDay();
-    const dayCount = new Date(calendar.year, calendar.month, 0).getDate();
+    const firstDay = new Date(calendar.year, month - 1, 1).getDay();
+    const dayCount = new Date(calendar.year, month, 0).getDate();
     const today = new Date();
-    const eventDays = new Set(calendar.events.map(event => event.day));
+    const eventRows = new Map();
+    const eventDays = new Map();
+    const holidayDays = new Set();
+    const examDays = new Set();
+    const markedDays = new Set();
+    events.forEach((event, index) => {
+      const rowId = event.id || `event-${event.day}${events.filter(item => item.day === event.day).length > 1 ? `-${index}` : ''}`;
+      eventRows.set(event, rowId);
+      const lastDay = event.endDay || event.day;
+      for (let day = event.day; day <= lastDay; day++) {
+        if (event.holiday) holidayDays.add(day);
+        // 一般區間只標首尾；考試期間每天顯示深色底。
+        if (!event.exam && day !== event.day && day !== lastDay) continue;
+        if (!eventDays.has(day)) eventDays.set(day, []);
+        eventDays.get(day).push(event);
+        if (event.exam) examDays.add(day);
+        else markedDays.add(day);
+      }
+    });
     for (let row = 0; row < Math.ceil((firstDay + dayCount) / 7); row++) {
       const weekRow = element('tr');
-      const week = element('th', 'week-number', calendar.firstWeek + row);
+      const week = element('th', 'week-number', firstWeek + row);
       week.scope = 'row';
-      week.setAttribute('aria-label', `第 ${calendar.firstWeek + row} 週`);
+      week.setAttribute('aria-label', `第 ${firstWeek + row} 週`);
       weekRow.append(week);
       for (let column = 0; column < 7; column++) {
         const day = row * 7 + column - firstDay + 1;
         const cell = element('td');
         if (day > 0 && day <= dayCount) {
-          const hasEvent = eventDays.has(day);
+          const dayEvents = eventDays.get(day) || [];
+          const hasEvent = dayEvents.length > 0;
           const date = element(hasEvent ? 'button' : 'span', 'day-number', day);
-          if (today.getFullYear() === calendar.year && today.getMonth() + 1 === calendar.month && today.getDate() === day) date.setAttribute('aria-current', 'date');
+          if (column === 0 || column === 6) date.classList.add('is-weekend');
+          if (holidayDays.has(day)) date.classList.add('is-holiday');
+          if (examDays.has(day)) date.classList.add('is-exam');
+          if (markedDays.has(day)) date.classList.add('has-event-dot');
+          if (today.getFullYear() === calendar.year && today.getMonth() + 1 === month && today.getDate() === day) date.setAttribute('aria-current', 'date');
           if (hasEvent) {
             date.type = 'button';
-            date.setAttribute('aria-label', `${calendar.month} 月 ${day} 日，查看重要日程`);
+            date.setAttribute('aria-label', `${month} 月 ${day} 日，查看重要日程`);
             date.setAttribute('aria-pressed', 'false');
-            date.setAttribute('aria-controls', `event-${day}`);
+            date.setAttribute('aria-controls', dayEvents.map(event => eventRows.get(event)).join(' '));
             date.addEventListener('click', () => {
               const select = date.getAttribute('aria-pressed') !== 'true';
               table.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', 'false'));
               document.querySelectorAll('.agenda > li').forEach(item => item.classList.remove('is-highlighted'));
               date.setAttribute('aria-pressed', String(select));
-              document.querySelector(`#event-${day}`).classList.toggle('is-highlighted', select);
-              if (select) announce(`${calendar.month} 月 ${day} 日：${calendar.events.find(event => event.day === day).items.map(item => item.text).join('、')}`);
+              dayEvents.forEach(event => document.getElementById(eventRows.get(event)).classList.toggle('is-highlighted', select));
+              if (select) {
+                const agenda = document.querySelector('#agenda');
+                const firstMatch = document.getElementById(eventRows.get(dayEvents[0]));
+                agenda.scrollTop = firstMatch.offsetTop - 5;
+              }
+              if (select) announce(`${month} 月 ${day} 日：${dayEvents.flatMap(event => event.items.map(item => item.text)).join('、')}`);
             });
           }
           cell.append(date);
@@ -407,24 +452,48 @@
       body.append(weekRow);
     }
     table.append(body);
-    calendar.events.forEach(event => {
+    const agenda = document.querySelector('#agenda');
+    agenda.replaceChildren();
+    agenda.scrollTop = 0;
+    events.forEach(event => {
       const row = element('li');
-      row.id = `event-${event.day}`;
-      const date = element('div', 'agenda-date', `${calendar.month}.${String(event.day).padStart(2, '0')}（${event.weekday}）`);
-      date.append(element('span', '', `第 ${event.week} 週`));
-      if (event.important) date.append(element('span', 'deadline-tag', '截止'));
+      row.id = eventRows.get(event);
+      if (event.holiday) row.classList.add('is-holiday');
+      const endDay = event.endDay || event.day;
+      const dateText = `${month}.${String(event.day).padStart(2, '0')}（${event.weekday}）${endDay !== event.day ? `～${month}.${String(endDay).padStart(2, '0')}（${event.endWeekday}）` : ''}`;
+      // 三個獨立欄位共用 CSS gap，避免文字空白與 margin 造成間距不一致。
+      const date = element('div', 'agenda-date');
+      date.append(element('span', 'agenda-date-label', dateText), element('span', 'agenda-week', `第 ${event.week} 週`));
+      if (event.deadline) {
+        const deadline = element('span', 'deadline-tag', '截止');
+        deadline.title = `${month} 月 ${endDay} 日截止`;
+        date.append(deadline);
+      }
       const items = element('div', 'agenda-items');
       event.items.forEach(item => {
-        const link = destination(item);
+        const link = destination(item) || (item.toolId ? destination(toolsById.get(item.toolId)) : null);
         items.append(link ? externalLink(element('a', '', `${item.text} ↗`), link) : element('span', '', item.text));
       });
       row.append(date, items);
-      document.querySelector('#agenda').append(row);
+      agenda.append(row);
     });
     document.querySelector('#google-calendar').href = `https://calendar.google.com/calendar/u/0/r?cid=${encodeURIComponent(calendar.calendarId)}`;
     document.querySelector('#google-calendar').title = '在 Google 日曆訂閱政大校曆，需登入 Google 帳號';
     document.querySelector('#official-calendar').href = calendar.officialUrl;
   }
+
+  document.querySelector('#month-prev').addEventListener('click', () => {
+    if (data.calendar.months?.[activeCalendarMonth - 1]) {
+      activeCalendarMonth--;
+      renderCalendar();
+    }
+  });
+  document.querySelector('#month-next').addEventListener('click', () => {
+    if (data.calendar.months?.[activeCalendarMonth + 1]) {
+      activeCalendarMonth++;
+      renderCalendar();
+    }
+  });
 
   function renderNews() {
     const news = data.news[newsIndex];

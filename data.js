@@ -46,23 +46,51 @@ window.PORTAL_DATA = {
     semester: '115 學年度・第 1 學期',
     calendarId: 'acanccu@gmail.com',
     officialUrl: 'https://www.nccu.edu.tw/p/426-1000-14.php?Lang=zh-tw#gsc.tab=0',
-    // 本月內容依使用者提供的學校行事曆，不會自動同步校方資料。
+    // 校方資料為手動整理；週次與假日依提供的學校月曆截圖設定。
     events: [
       { day: 2, weekday: '一', week: 9, items: [
         { text: '申請停修開始日', url: 'https://selectcourse.nccu.edu.tw/regcourse/' },
         { text: '校務會議' }
       ] },
-      { day: 13, weekday: '五', week: 10, important: true, items: [
+      { day: 13, weekday: '五', week: 10, deadline: true, items: [
         { text: '申請停修截止日', url: 'https://selectcourse.nccu.edu.tw/regcourse/' },
         { text: '學士班提前畢業申請截止日' },
         { text: '繳交學分費暨語言設備使用費截止日', screenshot: '我的繳費單截圖.png' }
       ] },
-      { day: 20, weekday: '五', week: 11, items: [
+      { day: 20, weekday: '五', week: 11, deadline: true, items: [
         { text: '學期 2/3 退費基準日' },
         { text: '輔系、雙主修上網放棄修習截止日', screenshot: '輔系雙主修申請修讀放棄修讀系統截圖.png' }
       ] },
       { day: 25, weekday: '三', week: 12, items: [{ text: '行政會議' }] }
-    ]
+    ],
+    months: {
+      10: {
+        firstWeek: 4,
+        events: [
+          { day: 9, endDay: 10, weekday: '五', endWeekday: '六', week: 5, holiday: true, items: [{ text: '補假／國慶日' }] },
+          { day: 12, weekday: '一', week: 6, items: [{ text: '第 1 次教務會議' }] },
+          { day: 16, weekday: '五', week: 6, items: [{ text: '學期 1/3 退費基準日' }] },
+          { day: 25, endDay: 26, weekday: '日', endWeekday: '一', week: 8, holiday: true, items: [{ text: '臺灣光復暨金門古寧頭大捷紀念日／補假' }] },
+          { day: 27, endDay: 30, weekday: '二', endWeekday: '五', week: 8, exam: true, items: [{ text: '期中隨堂考試', toolId: 'grades' }] }
+        ]
+      },
+      11: { firstWeek: 9, events: null },
+      12: {
+        firstWeek: 13,
+        events: [
+          { day: 5, weekday: '六', week: 13, items: [{ text: '文化盃系際合唱比賽' }] },
+          { day: 6, weekday: '日', week: 14, items: [{ text: '校園馬拉松（6:30–9:30 校園封路）', toolId: 'registration' }] },
+          { day: 14, weekday: '一', week: 15, items: [
+            { text: '第 2 次教務會議' }
+          ] },
+          { day: 14, endDay: 18, weekday: '一', endWeekday: '五', week: 15, deadline: true, items: [{ text: '學雜費減免預辦', toolId: 'aid' }] },
+          { day: 18, weekday: '五', week: 15, deadline: true, items: [{ text: '申請休學、學位考試截止日' }] },
+          { day: 21, endDay: 24, weekday: '一', endWeekday: '四', week: 16, exam: true, items: [{ text: '期末隨堂考試', toolId: 'grades' }] },
+          { day: 25, weekday: '五', week: 16, holiday: true, items: [{ text: '行憲紀念日' }] },
+          { day: 28, weekday: '一', week: 17, items: [{ text: '寒假開始／校務會議' }] }
+        ]
+      }
+    }
   },
   news: [
     { id: 'campus', label: '校園新聞', category: 'CAMPUS / 校園動態', title: '校園大小事，即將在這裡相遇。', summary: '校園新聞專區建置中。未來將收錄政大最新消息，讓每一則值得關注的故事，都離你更近。' },

@@ -43,12 +43,16 @@
     <section class="panel calendar-panel" aria-labelledby="calendar-title">
       <div class="panel-header"><h2 id="calendar-title">行事曆</h2><a id="google-calendar" class="panel-action google-link" target="_blank" rel="noopener noreferrer"><span class="google-mark" aria-hidden="true">G</span><span>加入 Google 日曆<span class="external-mark" aria-hidden="true"> ↗</span></span></a></div>
       <div class="calendar-body">
-        <div class="calendar-topline"><div><span class="month-number">11</span><span class="month-label">月 <span>2026</span></span></div><span class="semester-label">115 學年度・第 1 學期</span></div>
+        <div class="calendar-topline">
+          <button id="month-prev" class="month-step" type="button" aria-label="切換至 10 月">10月</button>
+          <div class="month-title"><div><span class="month-number">11</span><span class="month-label">月</span></div><span class="year-label">2026</span><span class="semester-label">115 學年度・第 1 學期</span></div>
+          <button id="month-next" class="month-step" type="button" aria-label="切換至 12 月">12月</button>
+        </div>
         <div class="calendar-content">
           <div class="month-area"><table id="month-calendar" class="month-calendar"><caption class="sr-only">2026 年 11 月學校行事曆，左欄為學期週次</caption></table><div class="calendar-legend"><span class="event-dot"></span>重要日程 <span class="today-key"></span>今天</div></div>
-          <div class="agenda-area"><h3>本月重要日程</h3><ol id="agenda" class="agenda"></ol></div>
+          <div class="agenda-area"><h3>本月重要日程</h3><ol id="agenda" class="agenda" tabindex="0" aria-label="本月重要日程，可上下捲動"></ol></div>
         </div>
-        <div class="calendar-footer"><span>點選有圓點的日期，查看對應日程</span><a id="official-calendar" target="_blank" rel="noopener noreferrer">學校完整行事曆 ↗</a></div>
+        <div class="calendar-footer"><!--<span>點選有圓點的日期，查看對應日程</span>--><a id="official-calendar" target="_blank" rel="noopener noreferrer">學校完整行事曆 ↗</a></div>
       </div>
     </section>
 
@@ -73,9 +77,9 @@
   </dialog>
   <dialog id="services-dialog" aria-labelledby="services-title" aria-describedby="services-description">
     <div class="dialog-header"><div><!--<span class="eyebrow">CAMPUS SERVICES</span>--><h2 id="services-title">宿舍統一入口</h2></div><button class="close-button" id="close-services" type="button" aria-label="關閉宿舍統一入口" title="關閉宿舍統一入口"></button></div>
-    <p id="services-description">選擇服務，在新分頁開啟對應的系統截圖。</p>
+    <!--<p id="services-description">選擇服務，在新分頁開啟對應的系統截圖。</p>-->
     <ul id="service-links" class="service-links"></ul>
-    <p class="dialog-footnote">截圖僅供原型展示，無法在此實際送出申請。</p>
+    <!--<p class="dialog-footnote">截圖僅供原型展示，無法在此實際送出申請。</p>-->
   </dialog>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <noscript><p class="noscript">請啟用 JavaScript 以使用常用系統與行事曆。</p></noscript>
