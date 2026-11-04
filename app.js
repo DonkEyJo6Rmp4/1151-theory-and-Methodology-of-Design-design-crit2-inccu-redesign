@@ -263,14 +263,28 @@
     if (focusId) search.focus();
   }
 
-  editButton.addEventListener('click', () => {
-    editing = !editing;
+  // 編輯與恢復預設共用同一套介面更新，避免按鈕文字與搖晃狀態不同步。
+  function setEditing(nextEditing) {
+    editing = nextEditing;
     editButton.setAttribute('aria-pressed', String(editing));
     editButton.querySelector('span').textContent = editing ? '完成編輯' : '調整排序';
     document.querySelector('.systems-panel').classList.toggle('is-editing', editing);
     document.querySelector('#edit-hint').hidden = !editing;
     renderTools();
+  }
+
+  editButton.addEventListener('click', () => {
+    setEditing(!editing);
     if (!editing) announce('已完成常用工具編輯。');
+  });
+
+  document.querySelector('#reset-tools').addEventListener('click', () => {
+    // 複製預設清單，不修改 data.js 的原始設定，也不清除其他功能的瀏覽器資料。
+    favorites = [...data.defaultFavorites];
+    draggedId = null;
+    saveFavorites();
+    setEditing(false);
+    announce('已恢復預設工具與排序。');
   });
   search.addEventListener('input', () => renderCatalog());
   document.querySelector('#close-dialog').addEventListener('click', () => dialog.close());

@@ -27,7 +27,8 @@
   <a class="skip-link" href="#main">跳至主要內容</a>
   <header class="site-header">
     <!-- picture 直接選取較小的 WebP；原 PNG 保留作為相容與載入失敗時的來源。 -->
-    <a class="brand" href="./" aria-label="iNCCU 愛政大首頁">
+    <a class="brand" href="assets/optimized/screenshots/認真做DesignCrit的我們.webp" target="_blank" rel="noopener noreferrer"
+      aria-label="iNCCU 彩蛋：認真做 Design Crit 的我們（另開分頁）">
       <picture>
         <source type="image/webp" srcset="assets/optimized/icons/iNCCUicon.webp"><img src="assets/icons/iNCCUicon.png"
           data-original-src="assets/icons/iNCCUicon.png" alt="iNCCU 愛政大 校園個人化入口" width="404" height="165"
@@ -64,12 +65,16 @@
     <section class="panel systems-panel" aria-labelledby="systems-title">
       <div class="panel-header">
         <h1 id="systems-title">資訊系統入口</h1>
-        <button id="edit-tools" class="panel-action edit-button" type="button" aria-pressed="false">
-          <picture>
-            <source type="image/webp" srcset="assets/optimized/icons/區塊調整icon.webp"><img src="assets/icons/區塊調整icon.png"
-              data-original-src="assets/icons/區塊調整icon.png" alt="" width="122" height="122" decoding="async">
-          </picture><span>調整排序</span>
-        </button>
+        <div class="systems-actions">
+          <button id="reset-tools" class="panel-action" type="button" title="恢復預設工具與排序">恢復預設</button>
+          <button id="edit-tools" class="panel-action edit-button" type="button" aria-pressed="false">
+            <picture>
+              <source type="image/webp" srcset="assets/optimized/icons/區塊調整icon.webp"><img
+                src="assets/icons/區塊調整icon.png" data-original-src="assets/icons/區塊調整icon.png" alt="" width="122"
+                height="122" decoding="async">
+            </picture><span>調整排序</span>
+          </button>
+        </div>
       </div>
       <div class="systems-body">
         <div class="section-caption">

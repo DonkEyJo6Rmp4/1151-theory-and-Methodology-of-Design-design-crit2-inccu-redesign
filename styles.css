@@ -193,6 +193,7 @@ button {
   font-size: 12px;
   white-space: nowrap;
   text-decoration: none;
+  width: 120px;
   min-height: 36px;
 }
 
@@ -219,6 +220,28 @@ button {
   grid-row: 1 / 3;
   display: flex;
   flex-direction: column;
+}
+
+/* 只讓資訊系統標題列在窄螢幕換行，不影響行事曆與新聞。 */
+.systems-panel > .panel-header {
+  height: auto;
+  min-height: 59px;
+  flex-wrap: wrap;
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
+
+.systems-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.systems-actions .panel-action {
+  width: 100px;
+  height: 36px;
+  justify-content: center;
 }
 
 .systems-body {
