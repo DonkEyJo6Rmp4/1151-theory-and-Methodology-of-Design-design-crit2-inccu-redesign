@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="zh-Hant">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,15 +22,41 @@
   <script src="announcements-data.js" defer></script>
   <script src="announcements.js" defer></script>
 </head>
+
 <body>
   <a class="skip-link" href="#main">跳至主要內容</a>
   <header class="site-header">
     <!-- picture 直接選取較小的 WebP；原 PNG 保留作為相容與載入失敗時的來源。 -->
-    <a class="brand" href="./" aria-label="iNCCU 愛政大首頁"><picture><source type="image/webp" srcset="assets/optimized/icons/iNCCUicon.webp"><img src="assets/icons/iNCCUicon.png" data-original-src="assets/icons/iNCCUicon.png" alt="iNCCU 愛政大 校園個人化入口" width="404" height="165" decoding="async" fetchpriority="high"></picture></a>
+    <a class="brand" href="./" aria-label="iNCCU 愛政大首頁">
+      <picture>
+        <source type="image/webp" srcset="assets/optimized/icons/iNCCUicon.webp"><img src="assets/icons/iNCCUicon.png"
+          data-original-src="assets/icons/iNCCUicon.png" alt="iNCCU 愛政大 校園個人化入口" width="404" height="165"
+          decoding="async" fetchpriority="high">
+      </picture>
+    </a>
     <div class="header-tools" role="group" aria-label="頁首功能選單">
-      <button class="header-tool" type="button" data-header-dialog="personal-dialog" aria-haspopup="dialog" aria-controls="personal-dialog" aria-label="個人設定" title="個人設定"><picture><source type="image/webp" srcset="assets/optimized/icons/個人設定icon.webp"><img src="assets/icons/個人設定icon.png" data-original-src="assets/icons/個人設定icon.png" alt="" width="136" height="163" decoding="async"></picture><span>個人設定</span></button>
-      <button class="header-tool" type="button" data-header-dialog="information-dialog" aria-haspopup="dialog" aria-controls="information-dialog" aria-label="資訊" title="資訊"><picture><source type="image/webp" srcset="assets/optimized/icons/informationicon.webp"><img src="assets/icons/informationicon.png" data-original-src="assets/icons/informationicon.png" alt="" width="165" height="165" decoding="async"></picture><span>資訊</span></button>
-      <button class="header-tool" type="button" data-header-dialog="emergency-dialog" aria-haspopup="dialog" aria-controls="emergency-dialog" aria-label="緊急通聯" title="緊急通聯"><picture><source type="image/webp" srcset="assets/optimized/icons/緊急通聯icon.webp"><img src="assets/icons/緊急通聯icon.png" data-original-src="assets/icons/緊急通聯icon.png" alt="" width="180" height="163" decoding="async"></picture><span>緊急通聯</span></button>
+      <button class="header-tool" type="button" data-header-dialog="personal-dialog" aria-haspopup="dialog"
+        aria-controls="personal-dialog" aria-label="個人設定" title="個人設定">
+        <picture>
+          <source type="image/webp" srcset="assets/optimized/icons/個人設定icon.webp"><img src="assets/icons/個人設定icon.png"
+            data-original-src="assets/icons/個人設定icon.png" alt="" width="136" height="163" decoding="async">
+        </picture><span>個人設定</span>
+      </button>
+      <button class="header-tool" type="button" data-header-dialog="information-dialog" aria-haspopup="dialog"
+        aria-controls="information-dialog" aria-label="資訊" title="資訊">
+        <picture>
+          <source type="image/webp" srcset="assets/optimized/icons/informationicon.webp"><img
+            src="assets/icons/informationicon.png" data-original-src="assets/icons/informationicon.png" alt=""
+            width="165" height="165" decoding="async">
+        </picture><span>資訊</span>
+      </button>
+      <button class="header-tool" type="button" data-header-dialog="emergency-dialog" aria-haspopup="dialog"
+        aria-controls="emergency-dialog" aria-label="緊急通聯" title="緊急通聯">
+        <picture>
+          <source type="image/webp" srcset="assets/optimized/icons/緊急通聯icon.webp"><img src="assets/icons/緊急通聯icon.png"
+            data-original-src="assets/icons/緊急通聯icon.png" alt="" width="180" height="163" decoding="async">
+        </picture><span>緊急通聯</span>
+      </button>
     </div>
   </header>
 
@@ -37,44 +64,77 @@
     <section class="panel systems-panel" aria-labelledby="systems-title">
       <div class="panel-header">
         <h1 id="systems-title">資訊系統入口</h1>
-        <button id="edit-tools" class="panel-action edit-button" type="button" aria-pressed="false"><picture><source type="image/webp" srcset="assets/optimized/icons/區塊調整icon.webp"><img src="assets/icons/區塊調整icon.png" data-original-src="assets/icons/區塊調整icon.png" alt="" width="122" height="122" decoding="async"></picture><span>調整排序</span></button>
+        <button id="edit-tools" class="panel-action edit-button" type="button" aria-pressed="false">
+          <picture>
+            <source type="image/webp" srcset="assets/optimized/icons/區塊調整icon.webp"><img src="assets/icons/區塊調整icon.png"
+              data-original-src="assets/icons/區塊調整icon.png" alt="" width="122" height="122" decoding="async">
+          </picture><span>調整排序</span>
+        </button>
       </div>
       <div class="systems-body">
-        <div class="section-caption"><!-- <span id="tools-hint">你的常用校園服務，都在這裡。</span> --><!-- <span id="tool-count">16 個常用工具</span> --></div>
+        <div class="section-caption">
+          <!-- <span id="tools-hint">你的常用校園服務，都在這裡。</span> --><!-- <span id="tool-count">16 個常用工具</span> -->
+        </div>
         <p id="edit-hint" class="edit-hint" hidden>拖曳圖示至藍色插入線的位置，或使用前移／後移按鈕。按 × 可移除，完成後按「完成編輯」。</p>
         <ul id="tool-grid" class="tool-grid" aria-label="常用資訊系統"></ul>
-        <div class="systems-footer"><!--<span class="small-dot"></span>--><!-- <span>依欄由上至下、由左至右排列</span> --><!-- <span class="saved-note" id="save-state">已儲存於此瀏覽器</span> --></div>
+        <div class="systems-footer">
+          <!--<span class="small-dot"></span>--><!-- <span>依欄由上至下、由左至右排列</span> --><!-- <span class="saved-note" id="save-state">已儲存於此瀏覽器</span> -->
+        </div>
       </div>
     </section>
 
     <section class="panel calendar-panel" aria-labelledby="calendar-title">
-      <div class="panel-header"><h2 id="calendar-title">行事曆</h2><a id="google-calendar" class="panel-action google-link" target="_blank" rel="noopener noreferrer"><span class="google-mark" aria-hidden="true">G</span><span>加入 Google 日曆<span class="external-mark" aria-hidden="true"> ↗</span></span></a></div>
+      <div class="panel-header">
+        <h2 id="calendar-title">行事曆</h2><a id="google-calendar" class="panel-action google-link" target="_blank"
+          rel="noopener noreferrer"><span class="google-mark" aria-hidden="true">G</span><span>加入 Google 日曆<span
+              class="external-mark" aria-hidden="true"> ↗</span></span></a>
+      </div>
       <div class="calendar-body">
         <div class="calendar-topline">
           <button id="month-prev" class="month-step" type="button" aria-label="切換至 10 月">10月</button>
-          <div class="month-title"><div><span class="month-number">11</span><span class="month-label">月</span></div><span class="year-label">2026</span><span class="semester-label">115 學年度・第 1 學期</span></div>
+          <div class="month-title">
+            <div><span class="month-number">11</span><span class="month-label">月</span></div><span
+              class="year-label">2026</span><span class="semester-label">115 學年度・第 1 學期</span>
+          </div>
           <button id="month-next" class="month-step" type="button" aria-label="切換至 12 月">12月</button>
         </div>
         <div class="calendar-content">
-          <div class="month-area"><table id="month-calendar" class="month-calendar"><caption class="sr-only">2026 年 11 月學校行事曆，左欄為學期週次</caption></table><div class="calendar-legend"><span class="event-dot"></span>重要日程   <span class="day-number is-exam"> </span>
-  考試 <span class="today-key"> </span>今天</div></div>
-          <div class="agenda-area"><h3>本月重要日程</h3><ol id="agenda" class="agenda" tabindex="0" aria-label="本月重要日程，可上下捲動"></ol></div>
+          <div class="month-area">
+            <table id="month-calendar" class="month-calendar">
+              <caption class="sr-only">2026 年 11 月學校行事曆，左欄為學期週次</caption>
+            </table>
+            <div class="calendar-legend"><span class="event-dot"></span>重要日程 <span class="day-number is-exam"> </span>
+              考試 <span class="today-key"> </span>今天</div>
+          </div>
+          <div class="agenda-area">
+            <h3>本月重要日程</h3>
+            <ol id="agenda" class="agenda" tabindex="0" aria-label="本月重要日程，可上下捲動"></ol>
+          </div>
         </div>
-        <div class="calendar-footer"><!--<span>點選有圓點的日期，查看對應日程</span>--><a id="official-calendar" target="_blank" rel="noopener noreferrer">學校完整行事曆 ↗</a></div>
+        <div class="calendar-footer"><!--<span>點選有圓點的日期，查看對應日程</span>--><a id="official-calendar" target="_blank"
+            rel="noopener noreferrer">學校完整行事曆 ↗</a></div>
       </div>
     </section>
 
     <section class="panel news-panel" aria-labelledby="news-title">
-      <div class="panel-header"><h2 id="news-title">政大焦點</h2><!--<span class="panel-kicker">NCCU FOCUS</span>--></div>
+      <div class="panel-header">
+        <h2 id="news-title">政大焦點</h2><!--<span class="panel-kicker">NCCU FOCUS</span>-->
+      </div>
       <div class="news-body" role="region" aria-roledescription="輪播" aria-label="政大焦點">
         <button id="news-prev" class="carousel-arrow previous" type="button" aria-label="上一則新聞" disabled>‹</button>
         <!-- 圖片、官方標題及繼續閱讀共用同一連結，不顯示摘要或自訂說明。 -->
-        <a id="news-link" class="news-link" href="https://www.nccu.edu.tw/p/412-1000-87.php?Lang=zh-tw" target="_blank" rel="noopener noreferrer">
+        <a id="news-link" class="news-link" href="https://www.nccu.edu.tw/p/412-1000-87.php?Lang=zh-tw" target="_blank"
+          rel="noopener noreferrer">
           <div class="news-visual"><img id="news-image" alt="" hidden referrerpolicy="no-referrer"></div>
-          <div class="news-copy"><h3 id="news-heading">前往政大校園新聞</h3><span class="read-more">繼續閱讀 <span aria-hidden="true">↗</span></span></div>
+          <div class="news-copy">
+            <h3 id="news-heading">前往政大校園新聞</h3><span class="read-more">繼續閱讀 <span aria-hidden="true">↗</span></span>
+          </div>
         </a>
         <button id="news-next" class="carousel-arrow next" type="button" aria-label="下一則新聞" disabled>›</button>
-        <div class="news-bottom"><div id="news-dots" class="news-dots" aria-label="選擇新聞"></div><span id="news-position" aria-live="polite"></span></div>
+        <div class="news-bottom">
+          <div id="news-dots" class="news-dots" aria-label="選擇新聞"></div><span id="news-position"
+            aria-live="polite"></span>
+        </div>
       </div>
     </section>
   </main>
@@ -84,7 +144,8 @@
   <dialog id="personal-dialog" class="header-dialog" aria-labelledby="personal-title">
     <div class="dialog-header">
       <h2 id="personal-title">個人設定</h2>
-      <button class="close-button" type="button" data-header-close aria-label="關閉個人設定" title="關閉個人設定" autofocus></button>
+      <button class="close-button" type="button" data-header-close aria-label="關閉個人設定" title="關閉個人設定"
+        autofocus></button>
     </div>
     <div class="header-dialog-content">
       <details class="header-settings-section">
@@ -96,15 +157,27 @@
         </form>
       </details>
       <div class="header-fields header-settings-section">
-        <label>語言<select id="header-language"><option value="zh-Hant">繁體中文</option><option value="zh-Hans">簡體中文</option><option value="en">英文</option></select></label>
-        <label>自動登出時間<select id="header-logout-time"><option value="10">10 分鐘</option><option value="30" selected>30 分鐘</option><option value="60">60 分鐘</option><option value="120">120 分鐘</option><option value="never">不自動登出</option></select></label>
+        <label>語言<select id="header-language">
+            <option value="zh-Hant">繁體中文</option>
+            <option value="zh-Hans">簡體中文</option>
+            <option value="en">英文</option>
+          </select></label>
+        <label>自動登出時間<select id="header-logout-time">
+            <option value="10">10 分鐘</option>
+            <option value="30" selected>30 分鐘</option>
+            <option value="60">60 分鐘</option>
+            <option value="120">120 分鐘</option>
+            <option value="never">不自動登出</option>
+          </select></label>
         <button id="header-apply-settings" class="header-primary-button" type="button">套用設定</button>
       </div>
       <details class="header-settings-section">
         <summary>進階設定</summary>
         <form id="header-account-form" class="header-fields" method="dialog" autocomplete="off" novalidate>
-          <label>工作區帳號<input id="header-workspace-account" type="text" inputmode="email" autocomplete="off" spellcheck="false"></label>
-          <button id="header-link-account" class="header-primary-button" type="submit" aria-pressed="false">連結帳號</button>
+          <label>工作區帳號<input id="header-workspace-account" type="text" inputmode="email" autocomplete="off"
+              spellcheck="false"></label>
+          <button id="header-link-account" class="header-primary-button" type="submit"
+            aria-pressed="false">連結帳號</button>
         </form>
       </details>
     </div>
@@ -119,17 +192,29 @@
     <div class="header-dialog-content">
       <section class="header-history" aria-labelledby="header-history-title">
         <h3 id="header-history-title">登入歷史</h3>
-        <label class="header-history-filter">查詢範圍<select id="header-history-range"><option value="7">最近 7 天</option><option value="30">最近 30 天</option><option value="all">全部</option></select></label>
+        <label class="header-history-filter">查詢範圍<select id="header-history-range">
+            <option value="7">最近 7 天</option>
+            <option value="30">最近 30 天</option>
+            <option value="all">全部</option>
+          </select></label>
         <table class="header-history-table">
           <caption class="sr-only">登入時間與網路位址</caption>
-          <thead><tr><th scope="col">時間</th><th scope="col">網路位址</th></tr></thead>
+          <thead>
+            <tr>
+              <th scope="col">時間</th>
+              <th scope="col">網路位址</th>
+            </tr>
+          </thead>
           <tbody id="header-history-rows"></tbody>
         </table>
       </section>
       <nav class="header-info-links" aria-label="校園資訊連結">
-        <a href="https://i.nccu.edu.tw/doc/index.html" target="_blank" rel="noopener noreferrer">iNCCU 說明<span aria-hidden="true">↗</span></a>
-        <a href="https://www.nccu.edu.tw/index.php?Lang=zh-tw" target="_blank" rel="noopener noreferrer">政大首頁<span aria-hidden="true">↗</span></a>
-        <a href="https://www.nccu.edu.tw/p/426-1000-83.php?Lang=zh-tw#gsc.tab=0" target="_blank" rel="noopener noreferrer">交通與校園地圖<span aria-hidden="true">↗</span></a>
+        <a href="https://i.nccu.edu.tw/doc/index.html" target="_blank" rel="noopener noreferrer">iNCCU 說明<span
+            aria-hidden="true">↗</span></a>
+        <a href="https://www.nccu.edu.tw/index.php?Lang=zh-tw" target="_blank" rel="noopener noreferrer">政大首頁<span
+            aria-hidden="true">↗</span></a>
+        <a href="https://www.nccu.edu.tw/p/426-1000-83.php?Lang=zh-tw#gsc.tab=0" target="_blank"
+          rel="noopener noreferrer">交通與校園地圖<span aria-hidden="true">↗</span></a>
       </nav>
       <address class="header-contact">
         <p>電話：<a href="tel:0229393091">02-29393091</a></p>
@@ -141,23 +226,27 @@
   <dialog id="emergency-dialog" class="header-dialog" aria-labelledby="emergency-title">
     <div class="dialog-header">
       <h2 id="emergency-title">緊急通聯</h2>
-      <button class="close-button" type="button" data-header-close aria-label="關閉緊急通聯" title="關閉緊急通聯" autofocus></button>
+      <button class="close-button" type="button" data-header-close aria-label="關閉緊急通聯" title="關閉緊急通聯"
+        autofocus></button>
     </div>
     <!-- 整張號碼卡都是複製按鈕；僅複製號碼，不會撥出電話。 -->
     <div class="header-emergency-list">
-      <button class="header-phone-card header-phone-urgent" type="button" data-copy-number="0919-099-119" aria-label="複製24小時緊急事件通聯窗口電話0919-099-119">
+      <button class="header-phone-card header-phone-urgent" type="button" data-copy-number="0919-099-119"
+        aria-label="複製24小時緊急事件通聯窗口電話0919-099-119">
         <span class="header-phone-label">24 小時緊急事件通聯窗口</span>
         <strong>0919-099-119</strong>
         <span>校內分機：66119</span>
         <span class="header-copy-label">點擊複製號碼</span>
       </button>
-      <button class="header-phone-card" type="button" data-copy-number="02-2938-7129" aria-label="複製駐警隊或警衛室電話02-2938-7129">
+      <button class="header-phone-card" type="button" data-copy-number="02-2938-7129"
+        aria-label="複製駐警隊或警衛室電話02-2938-7129">
         <span class="header-phone-label">駐警隊／警衛室</span>
         <strong>02-2938-7129</strong>
         <span>校內分機：66110</span>
         <span class="header-copy-label">點擊複製號碼</span>
       </button>
-      <button class="header-phone-card" type="button" data-copy-number="02-2939-3091" aria-label="複製駐警隊或警衛室另一支電話02-2939-3091">
+      <button class="header-phone-card" type="button" data-copy-number="02-2939-3091"
+        aria-label="複製駐警隊或警衛室另一支電話02-2939-3091">
         <span class="header-phone-label">駐警隊／警衛室・其他聯絡號碼</span>
         <strong>02-2939-3091</strong>
         <span>校內分機：66110</span>
@@ -168,19 +257,32 @@
   </dialog>
 
   <dialog id="add-dialog" aria-labelledby="add-title" aria-describedby="add-description">
-    <div class="dialog-header"><div><!--<span class="eyebrow">YOUR CAMPUS TOOLKIT</span>--><h2 id="add-title">其他功能</h2></div><button class="close-button" id="close-dialog" type="button" aria-label="關閉其他功能" title="關閉其他功能"></button></div>
+    <div class="dialog-header">
+      <div><!--<span class="eyebrow">YOUR CAMPUS TOOLKIT</span>-->
+        <h2 id="add-title">其他功能</h2>
+      </div><button class="close-button" id="close-dialog" type="button" aria-label="關閉其他功能" title="關閉其他功能"></button>
+    </div>
     <p id="add-description">點選圖示或文字直接開啟服務，也可以加入首頁快捷。</p>
-    <label class="search-box"><span aria-hidden="true">⌕</span><input id="tool-search" type="search" placeholder="搜尋工具名稱或功能" autocomplete="off" aria-label="搜尋工具"></label>
+    <label class="search-box"><span aria-hidden="true">⌕</span><input id="tool-search" type="search"
+        placeholder="搜尋工具名稱或功能" autocomplete="off" aria-label="搜尋工具"></label>
     <div id="tool-catalog" class="tool-catalog"></div>
     <p class="dialog-footnote">移除只會將捷徑從首頁隱藏，可隨時重新加入。</p>
   </dialog>
   <dialog id="services-dialog" aria-labelledby="services-title" aria-describedby="services-description">
-    <div class="dialog-header"><div><!--<span class="eyebrow">CAMPUS SERVICES</span>--><h2 id="services-title">宿舍統一入口</h2></div><button class="close-button" id="close-services" type="button" aria-label="關閉宿舍統一入口" title="關閉宿舍統一入口"></button></div>
+    <div class="dialog-header">
+      <div><!--<span class="eyebrow">CAMPUS SERVICES</span>-->
+        <h2 id="services-title">宿舍統一入口</h2>
+      </div><button class="close-button" id="close-services" type="button" aria-label="關閉宿舍統一入口"
+        title="關閉宿舍統一入口"></button>
+    </div>
     <!--<p id="services-description">選擇服務，在新分頁開啟對應的系統截圖。</p>-->
     <ul id="service-links" class="service-links"></ul>
     <!--<p class="dialog-footnote">截圖僅供原型展示，無法在此實際送出申請。</p>-->
   </dialog>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <noscript><p class="noscript">請啟用 JavaScript 以使用常用系統與行事曆。</p></noscript>
+  <noscript>
+    <p class="noscript">請啟用 JavaScript 以使用常用系統與行事曆。</p>
+  </noscript>
 </body>
+
 </html>
