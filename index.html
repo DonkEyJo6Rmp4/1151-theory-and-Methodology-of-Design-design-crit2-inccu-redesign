@@ -11,6 +11,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="header-menu.css">
+  <script src="header-menu.js" defer></script>
   <script src="data.js" defer></script>
   <script src="app.js" defer></script>
   <!-- 政大焦點由排程更新校園新聞資料，獨立於系統入口與行事曆的互動。 -->
@@ -21,11 +23,10 @@
   <a class="skip-link" href="#main">跳至主要內容</a>
   <header class="site-header">
     <a class="brand" href="./" aria-label="iNCCU 愛政大首頁"><img src="assets/icons/iNCCUicon.png" alt="iNCCU 愛政大 校園個人化入口" width="550" height="226"></a>
-    <div class="header-tools" aria-label="個人功能（建置中）">
-      <button class="header-tool" type="button" aria-disabled="true" title="個人資訊（建置中）"><img src="assets/icons/Usericon.png" alt=""><span>個人資訊</span></button>
-      <button class="header-tool" type="button" aria-disabled="true" title="設定（建置中）"><img src="assets/icons/設定icon.png" alt=""><span>設定</span></button>
-      <button class="header-tool" type="button" aria-disabled="true" title="編輯首頁（建置中）"><img src="assets/icons/編輯icon.png" alt=""><span>編輯</span></button>
-      <button class="header-tool" type="button" aria-disabled="true" title="Information（建置中）"><img src="assets/icons/informationicon.png" alt=""><span>Information</span></button>
+    <div class="header-tools" role="group" aria-label="頁首功能選單">
+      <button class="header-tool" type="button" data-header-dialog="personal-dialog" aria-haspopup="dialog" aria-controls="personal-dialog" aria-label="個人設定" title="個人設定"><img src="assets/icons/個人設定icon.png" alt=""><span>個人設定</span></button>
+      <button class="header-tool" type="button" data-header-dialog="information-dialog" aria-haspopup="dialog" aria-controls="information-dialog" aria-label="資訊" title="資訊"><img src="assets/icons/informationicon.png" alt=""><span>資訊</span></button>
+      <button class="header-tool" type="button" data-header-dialog="emergency-dialog" aria-haspopup="dialog" aria-controls="emergency-dialog" aria-label="緊急通聯" title="緊急通聯"><img src="assets/icons/緊急通聯icon.png" alt=""><span>緊急通聯</span></button>
     </div>
   </header>
 
@@ -74,7 +75,94 @@
       </div>
     </section>
   </main>
-  <footer class="site-footer"><span>iNCCU 校園個人化入口</span><span>首頁設計原型 · 系統截圖僅供展示</span></footer>
+  <footer class="site-footer"><!--<span>iNCCU 校園個人化入口</span><span>首頁設計原型 · 系統截圖僅供展示</span>--></footer>
+
+  <!-- 頁首視窗獨立於工具目錄；設定僅模擬互動，不送出或儲存帳號資料。 -->
+  <dialog id="personal-dialog" class="header-dialog" aria-labelledby="personal-title">
+    <div class="dialog-header">
+      <h2 id="personal-title">個人設定</h2>
+      <button class="close-button" type="button" data-header-close aria-label="關閉個人設定" title="關閉個人設定" autofocus></button>
+    </div>
+    <div class="header-dialog-content">
+      <details class="header-settings-section">
+        <summary>更改密碼</summary>
+        <form id="header-password-form" class="header-fields" method="dialog" autocomplete="off" novalidate>
+          <label>新密碼<input id="header-new-password" type="password" autocomplete="new-password"></label>
+          <label>再次輸入新密碼<input id="header-confirm-password" type="password" autocomplete="new-password"></label>
+          <button class="header-primary-button" type="submit">確認變更</button>
+        </form>
+      </details>
+      <div class="header-fields header-settings-section">
+        <label>語言<select id="header-language"><option value="zh-Hant">繁體中文</option><option value="zh-Hans">簡體中文</option><option value="en">英文</option></select></label>
+        <label>自動登出時間<select id="header-logout-time"><option value="10">10 分鐘</option><option value="30" selected>30 分鐘</option><option value="60">60 分鐘</option><option value="120">120 分鐘</option><option value="never">不自動登出</option></select></label>
+        <button id="header-apply-settings" class="header-primary-button" type="button">套用設定</button>
+      </div>
+      <details class="header-settings-section">
+        <summary>進階設定</summary>
+        <form id="header-account-form" class="header-fields" method="dialog" autocomplete="off" novalidate>
+          <label>工作區帳號<input id="header-workspace-account" type="text" inputmode="email" autocomplete="off" spellcheck="false"></label>
+          <button id="header-link-account" class="header-primary-button" type="submit" aria-pressed="false">連結帳號</button>
+        </form>
+      </details>
+    </div>
+    <p class="header-feedback" role="status" aria-live="polite" aria-atomic="true"></p>
+  </dialog>
+
+  <dialog id="information-dialog" class="header-dialog" aria-labelledby="information-title">
+    <div class="dialog-header">
+      <h2 id="information-title">資訊</h2>
+      <button class="close-button" type="button" data-header-close aria-label="關閉資訊" title="關閉資訊" autofocus></button>
+    </div>
+    <div class="header-dialog-content">
+      <section class="header-history" aria-labelledby="header-history-title">
+        <h3 id="header-history-title">登入歷史</h3>
+        <label class="header-history-filter">查詢範圍<select id="header-history-range"><option value="7">最近 7 天</option><option value="30">最近 30 天</option><option value="all">全部</option></select></label>
+        <table class="header-history-table">
+          <caption class="sr-only">登入時間與網路位址</caption>
+          <thead><tr><th scope="col">時間</th><th scope="col">網路位址</th></tr></thead>
+          <tbody id="header-history-rows"></tbody>
+        </table>
+      </section>
+      <nav class="header-info-links" aria-label="校園資訊連結">
+        <a href="https://i.nccu.edu.tw/doc/index.html" target="_blank" rel="noopener noreferrer">iNCCU 說明<span aria-hidden="true">↗</span></a>
+        <a href="https://www.nccu.edu.tw/index.php?Lang=zh-tw" target="_blank" rel="noopener noreferrer">政大首頁<span aria-hidden="true">↗</span></a>
+        <a href="https://www.nccu.edu.tw/p/426-1000-83.php?Lang=zh-tw#gsc.tab=0" target="_blank" rel="noopener noreferrer">交通與校園地圖<span aria-hidden="true">↗</span></a>
+      </nav>
+      <address class="header-contact">
+        <p>電話：<a href="tel:0229393091">02-29393091</a></p>
+        <p>地址：116011 臺北市文山區指南路二段64號</p>
+      </address>
+    </div>
+  </dialog>
+
+  <dialog id="emergency-dialog" class="header-dialog" aria-labelledby="emergency-title">
+    <div class="dialog-header">
+      <h2 id="emergency-title">緊急通聯</h2>
+      <button class="close-button" type="button" data-header-close aria-label="關閉緊急通聯" title="關閉緊急通聯" autofocus></button>
+    </div>
+    <!-- 整張號碼卡都是複製按鈕；僅複製號碼，不會撥出電話。 -->
+    <div class="header-emergency-list">
+      <button class="header-phone-card header-phone-urgent" type="button" data-copy-number="0919-099-119" aria-label="複製24小時緊急事件通聯窗口電話0919-099-119">
+        <span class="header-phone-label">24 小時緊急事件通聯窗口</span>
+        <strong>0919-099-119</strong>
+        <span>校內分機：66119</span>
+        <span class="header-copy-label">點擊複製號碼</span>
+      </button>
+      <button class="header-phone-card" type="button" data-copy-number="02-2938-7129" aria-label="複製駐警隊或警衛室電話02-2938-7129">
+        <span class="header-phone-label">駐警隊／警衛室</span>
+        <strong>02-2938-7129</strong>
+        <span>校內分機：66110</span>
+        <span class="header-copy-label">點擊複製號碼</span>
+      </button>
+      <button class="header-phone-card" type="button" data-copy-number="02-2939-3091" aria-label="複製駐警隊或警衛室另一支電話02-2939-3091">
+        <span class="header-phone-label">駐警隊／警衛室・其他聯絡號碼</span>
+        <strong>02-2939-3091</strong>
+        <span>校內分機：66110</span>
+        <span class="header-copy-label">點擊複製號碼</span>
+      </button>
+    </div>
+    <p class="header-feedback" role="status" aria-live="polite" aria-atomic="true"></p>
+  </dialog>
 
   <dialog id="add-dialog" aria-labelledby="add-title" aria-describedby="add-description">
     <div class="dialog-header"><div><!--<span class="eyebrow">YOUR CAMPUS TOOLKIT</span>--><h2 id="add-title">其他功能</h2></div><button class="close-button" id="close-dialog" type="button" aria-label="關閉其他功能" title="關閉其他功能"></button></div>

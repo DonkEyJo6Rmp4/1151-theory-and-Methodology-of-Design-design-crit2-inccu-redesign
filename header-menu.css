@@ -1,0 +1,62 @@
+/* 僅作用於頁首功能與其視窗，沿用既有色彩、字體和關閉按鈕。 */
+.header-tools { display: grid; grid-template-columns: repeat(3, 72px); gap: 18px; }
+.header-tools .header-tool { width: 72px; min-height: 70px; padding: 8px 4px; border-radius: 10px; cursor: pointer; transition: background .15s ease; }
+.header-tools .header-tool:hover, .header-tools .header-tool:focus-visible { background: #ffffff20; }
+.header-tools .header-tool img { width: 42px; height: 42px; }
+
+.header-dialog { width: min(440px, calc(100% - 32px)); padding: 24px; overflow-y: auto; }
+.header-dialog .dialog-header { gap: 12px; }
+.header-dialog-content { display: grid; gap: 20px; margin-top: 24px; }
+.header-dialog h3 { margin: 0 0 14px; font-size: 17px; font-weight: 600; }
+.header-dialog input, .header-dialog select { width: 100%; min-width: 0; min-height: 44px; padding: 10px 12px; border: 1px solid #b8cdd9; border-radius: 6px; background: white; color: var(--ink); font: inherit; outline-offset: 3px; }
+.header-dialog input[readonly] { background: var(--blue-soft); }
+.header-settings-section { padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.header-settings-section:last-child { padding-bottom: 0; border: 0; }
+.header-settings-section summary { cursor: pointer; font-size: 16px; font-weight: 600; padding: 5px 0; }
+.header-settings-section[open] summary { margin-bottom: 14px; }
+.header-fields { display: grid; gap: 14px; font-size: 14px; }
+.header-fields label { display: grid; gap: 8px; }
+.header-primary-button { min-height: 44px; padding: 10px 16px; border: 1px solid var(--blue); border-radius: 6px; color: white; background: var(--blue); font-weight: 500; }
+.header-primary-button:hover { background: var(--blue-dark); }
+.header-history-filter { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 14px; }
+.header-history-filter select { width: 150px; }
+.header-history-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; font-variant-numeric: tabular-nums; }
+.header-history-table th, .header-history-table td { padding: 11px 5px; text-align: left; border-bottom: 1px solid var(--line); }
+.header-history-table th { color: var(--muted); font-weight: 500; }
+.header-info-links { display: grid; gap: 10px; }
+.header-info-links a { display: flex; justify-content: space-between; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 7px; text-decoration: none; font-size: 15px; }
+.header-info-links a:hover { background: var(--blue-soft); border-color: var(--blue); }
+.header-contact { font-style: normal; font-size: 14px; line-height: 1.8; color: var(--muted); }
+.header-contact p { margin: 0 0 6px; }
+
+/* 全寬號碼卡保留足夠點擊範圍，數字可選取以供手動複製。 */
+.header-emergency-list { display: grid; gap: 14px; margin-top: 24px; }
+.header-phone-card { display: grid; justify-items: center; gap: 7px; width: 100%; padding: 20px 12px; border: 1px solid #b8cdd9; border-radius: 9px; background: var(--blue-soft); color: var(--blue-dark); text-align: center; font-size: 14px; transition: background .15s ease, transform .15s ease; }
+.header-phone-card:hover { background: #dbeaf4; transform: translateY(1px); }
+.header-phone-card strong { font-size: clamp(24px, 6vw, 32px); line-height: 1.4; font-weight: 700; font-variant-numeric: tabular-nums; user-select: text; }
+.header-phone-label { font-weight: 500; }
+.header-copy-label { margin-top: 3px; font-size: 12px; }
+.header-phone-urgent { border-color: #e8b5b4; background: #fff3f2; color: #9e3438; }
+.header-phone-urgent:hover { background: #fbe4e2; }
+
+/* 提示放在 dialog 內，才能顯示在原生視窗的最上層。 */
+.header-feedback { position: sticky; bottom: 0; margin: 16px 0 0; padding: 10px 12px; min-height: 42px; border-radius: 6px; background: var(--blue-dark); color: white; text-align: center; font-size: 14px; opacity: 0; pointer-events: none; transition: opacity .15s ease; }
+.header-feedback.is-visible { opacity: 1; }
+.header-feedback.is-error { background: #9e3438; }
+.header-copy-buffer { position: fixed; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
+@media (max-width: 850px) {
+  .header-tools { grid-template-columns: repeat(3, 56px); gap: 12px; }
+  .header-tools .header-tool { width: 56px; min-height: 58px; }
+  .header-tools .header-tool img { width: 32px; height: 32px; }
+}
+@media (max-width: 480px) {
+  .header-tools { grid-template-columns: repeat(3, 44px); gap: 8px; }
+  .header-tools .header-tool { width: 44px; min-height: 44px; padding: 6px; }
+  .header-tools .header-tool img { width: 28px; height: 28px; }
+  .header-dialog { padding: 22px 18px; }
+  .header-history-table { font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .header-tools .header-tool, .header-phone-card, .header-feedback { transition: none; }
+}
