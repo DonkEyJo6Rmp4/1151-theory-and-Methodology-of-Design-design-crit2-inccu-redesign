@@ -239,9 +239,26 @@ button {
 }
 
 .systems-actions .panel-action {
+  /* 兩顆按鈕共用尺寸，禁止 flex 因內容不同而縮成不同寬度。 */
+  flex: 0 0 100px;
   width: 100px;
   height: 36px;
+  padding: 0 8px;
+  gap: 4px;
+  align-items: center;
   justify-content: center;
+  text-align: center;
+  line-height: 1;
+}
+
+/* 圖示與文字一起置中，避免圖示獨立靠左造成視覺偏移。 */
+.systems-actions .edit-button picture {
+  flex: 0 0 18px;
+}
+
+.systems-actions .edit-button img {
+  width: 18px;
+  height: 18px;
 }
 
 .systems-body {
