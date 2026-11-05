@@ -791,7 +791,7 @@ button.day-number[aria-pressed=true] {
   gap: 14px;
   margin: px 0 0;
   color: var(--muted);
-  font-size: 18px
+  font-size: 14px
     /*var(--calendar-copy-size)*/
   ;
 }
