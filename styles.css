@@ -583,6 +583,10 @@ button {
 }
 
 .google-link {
+  /* Google 連結依圖示與文字決定寬度，不沿用一般按鈕的固定寬度。 */
+  width: auto;
+  flex: 0 0 auto;
+  justify-content: center;
   border: 0;
   padding-right: 0;
 }
